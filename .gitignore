@@ -1,0 +1,26 @@
+# Project exclude paths
+/node_modules/
+/logs
+*.log
+config.json
+package-lock.json
+
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+.mvn
+mvnw
+mvnw.cmd
