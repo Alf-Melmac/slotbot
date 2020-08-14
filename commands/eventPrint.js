@@ -13,7 +13,7 @@ module.exports = {
         Event.getEventByChannel(message, event => {
             if (event.infoMsg && event.infoMsg !== '0' || event.slotListMsg && event.slotListMsg !== '0') {
                 //Event includes messageIds. Seems like event got already posted
-                //TODO: Was wenn die Nachrichten händisch gelöscht wurden
+                //TODO: Überprüfung, ob die Nachricht noch existiert. Eventuell Löschevent abfangen
                 MessageHelper.sendDmAndDeleteMessage(message, `Guck erstmal da <https://discordapp.com/channels/${message.guild.id}/${event.channel}/${event.infoMsg}> oder da <https://discordapp.com/channels/${message.guild.id}/${event.channel}/${event.slotListMsg}>. Mach meinetwegen ein !updateEvent aber doch nicht nochmal posten, dass will doch keiner.`);
                 return;
             }
@@ -24,6 +24,9 @@ module.exports = {
                     //Send SlotList
                     message.channel.send(Event.createSlotListEmbed(event))
                         .then(slotListMsg => {
+                            //Pin message and delete pin information
+                            slotListMsg.pin().then(pinMsg => MessageHelper.deleteMessages(pinMsg.channel.lastMessage));
+
                             //Send msgIds to database
                             Event.putMessageIds(
                                 message,

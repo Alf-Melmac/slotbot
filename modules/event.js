@@ -34,16 +34,18 @@ class Event {
         eventRequest.putChannelIdsRequest(eventId, JSON.stringify(channelIds))
             .then(response => {
                 if (response.ok) {
-                    response.json().then(json => callback(json));
+                    response.json().then(json => {/*json is the event. But we don't need it here*/
+                    });
                 } else {
                     logger.error(response);
-                    MessageHelper.replyAndDelete(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe MessageIds zu setzen. Probiere es später nochmal oder Frage wen mit Ahnung.')
+                    MessageHelper.replyAndDeleteOnlySend(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe MessageIds zu setzen. Probiere es später nochmal oder Frage wen mit Ahnung.')
                 }
             })
             .catch(reason => {
                 logger.error(reason);
-                MessageHelper.replyAndDelete(message, 'Jetzt bin ich selber durcheinander gekommen wer hier warum wann Nachrichten sendet.');
-            });
+                MessageHelper.replyAndDeleteOnlySend(message, 'Jetzt bin ich selber durcheinander gekommen wer hier warum wann Nachrichten sendet.');
+            })
+            .finally(() => MessageHelper.deleteMessages(message));
     }
 
     static getEventByChannel(message, callback) {

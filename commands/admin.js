@@ -10,8 +10,8 @@ module.exports = {
 
         switch (args[0]) {
             case 'pinga':
-                logger.debug(`Message: ${message.channel.id}`);
-                logger.debug(`Channel: ${message.channel.name}`);
+                logger.debug(`Channel ID: ${message.channel.id}`);
+                logger.debug(`Channel name: ${message.channel.name}`);
                 MessageHelper.replyAndDeleteOnlySend(message, 'Pong.');
                 break;
             case 'pingb':
@@ -24,19 +24,35 @@ module.exports = {
                 }).catch(logger.error);
                 break;
             case 'stop':
-                logger.info('Stop command received');
-                process.exit();
+                if (message.author.id === '185067296623034368') {
+                    logger.info('Stop command received');
+                    MessageHelper.deleteMessages(message);
+                    process.exit();
+                }
                 break;
             case 'channelTest':
                 let channel = message.channel;
-                console.log(channel);
-                console.log(channel.id);
-                console.log(channel.name);
+                logger.info(channel);
+                logger.info(channel.id);
+                logger.info(channel.name);
                 break;
             case 'userTest':
                 let author = message.author;
-                console.log(author);
-                console.log(author.id);
+                logger.info(author.id);
+                break;
+            case 'del':
+                if (message.author.id === '185067296623034368') {
+                    let delMethod = async () => {
+                        let fetched;
+                        do {
+                            fetched = await message.channel.messages.fetch({limit: 100});
+                            await message.channel.bulkDelete(fetched);
+                        }
+                        while(fetched.size >= 2);
+                    }
+                    delMethod();
+                }
+                break;
         }
 
         MessageHelper.deleteMessages(message);
