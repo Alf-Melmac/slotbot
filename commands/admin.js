@@ -1,3 +1,5 @@
+const statusRequest = require("../modules/rest/statusRequest");
+
 module.exports = {
     name: 'admin',
     description: 'Admin utility!',
@@ -7,10 +9,19 @@ module.exports = {
         logger.debug('Command: admin');
 
         switch (args[0]) {
-            case 'ping':
+            case 'pinga':
                 logger.debug(`Message: ${message.channel.id}`);
                 logger.debug(`Channel: ${message.channel.name}`);
-                MessageHelper.replyAndDelete(message, 'Pong.');
+                MessageHelper.replyAndDeleteOnlySend(message, 'Pong.');
+                break;
+            case 'pingb':
+                statusRequest.getPingRequest().then(response => {
+                   if (response.ok) {
+                       logger.info('Ping ok');
+                   } else {
+                        logger.warn('Ping != ok');
+                   }
+                }).catch(logger.error);
                 break;
             case 'stop':
                 logger.info('Stop command received');
@@ -27,5 +38,7 @@ module.exports = {
                 console.log(author);
                 console.log(author.id);
         }
+
+        MessageHelper.deleteMessages(message);
     },
 };
