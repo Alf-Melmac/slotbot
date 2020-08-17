@@ -22,7 +22,10 @@ module.exports = {
                     } else {
                         logger.warn('Ping != ok');
                     }
-                }).catch(logger.error);
+                }).catch(error => {
+                    logger.error(error);
+                    MessageHelper.replyAndDeleteOnlySend(message, error.message);
+                });
                 break;
             case 'stop':
                 if (message.author.id === '185067296623034368') {
