@@ -16,11 +16,12 @@ module.exports = {
                 break;
             case 'pingb':
                 statusRequest.getPingRequest().then(response => {
-                   if (response.ok) {
-                       logger.info('Ping ok');
-                   } else {
+                    MessageHelper.replyAndDeleteOnlySend(message, `${response.status} ${response.statusText}`);
+                    if (response.ok) {
+                        logger.info('Ping ok');
+                    } else {
                         logger.warn('Ping != ok');
-                   }
+                    }
                 }).catch(logger.error);
                 break;
             case 'stop':
@@ -42,15 +43,14 @@ module.exports = {
                 break;
             case 'del':
                 if (message.author.id === '185067296623034368') {
-                    let delMethod = async () => {
+                    (async () => {
                         let fetched;
                         do {
                             fetched = await message.channel.messages.fetch({limit: 100});
                             await message.channel.bulkDelete(fetched);
                         }
-                        while(fetched.size >= 2);
-                    }
-                    delMethod();
+                        while (fetched.size >= 2);
+                    })()
                 }
                 break;
         }
