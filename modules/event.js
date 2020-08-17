@@ -48,6 +48,7 @@ class Event {
             .finally(() => MessageHelper.deleteMessages(message));
     }
 
+    //Get Event
     static getEventByChannel(message, callback) {
         eventRequest.getEventByChannelRequest(message.channel.id, callback)
             .then(response => {
@@ -72,6 +73,7 @@ class Event {
             });
     }
 
+    //Slotting
     static slotForEvent(message, slot_number, userId, callback) {
         eventRequest.postSlotRequest(message.channel.id, slot_number, userId)
             .then(response => {
@@ -102,6 +104,7 @@ class Event {
             });
     }
 
+    //Event messages
     static createEventEmbed(event) {
         // noinspection UnnecessaryLocalVariableJS
         let eventEmbed = new Discord.MessageEmbed()

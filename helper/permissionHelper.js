@@ -16,15 +16,15 @@ class PermissionHelper {
     }
 
     static hasSlotRole(message) {
-        return PermissionHelper.authorHasAtLeastOneOfRoles(message, PermissionHelper.getSlotRoles());
+        return this.authorHasAtLeastOneOfRoles(message, this.getSlotRoles());
     }
 
     static hasEventManageRole(message) {
-        return PermissionHelper.authorHasAtLeastOneOfRoles(message, PermissionHelper.getEventManageRoles());
+        return this.authorHasAtLeastOneOfRoles(message, this.getEventManageRoles());
     }
 
     static hasAdministrativeFunction(message) {
-        return PermissionHelper.authorHasAtLeastOneOfRoles(message, PermissionHelper.getAdministrativeRoles());
+        return this.authorHasAtLeastOneOfRoles(message, this.getAdministrativeRoles());
     }
 
     static getAdministrativeRoles() {
