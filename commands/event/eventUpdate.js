@@ -1,4 +1,4 @@
-const EventUpdate = require('../helper/eventUpdate');
+const EventUpdate = require('../../helper/eventUpdate');
 
 module.exports = {
     name: 'eventupdate',

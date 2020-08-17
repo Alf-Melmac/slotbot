@@ -18,26 +18,27 @@ logger = winston.createLogger({
             maxFiles: '14d'
         })
     ],
-    format: winston.format.printf(log => `[${new Date().toLocaleString("de-DE")} ${log.level.toUpperCase()}] - ${log.message}`)
+    format: winston.format.printf(log => `[${new Date().toLocaleString('de-DE')} ${log.level.toUpperCase()}] - ${log.message}`)
 });
 
 //Config
 const {prefix, token} = require('./config.json');
 
 //Make the helper classes publicly available
-PermissionHelper = require("./helper/permissionHelper");
-MessageHelper = require("./helper/messageHelper");
+PermissionHelper = require('./helper/permissionHelper');
+MessageHelper = require('./helper/messageHelper');
 
 //Build command list
-const fs = require('fs');
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const FileHelper = require('./helper/fileHelper');
+const commandFiles = FileHelper.getJsFiles('./commands')
+    .concat(FileHelper.getCommandFilesInCategory('event'));
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
 
 //Bot start
-client.login(token).then(() => logger.info("Logged in"));
+client.login(token).then(() => logger.info('Logged in'));
 client.once('ready', () => {
     logger.info('Bot ready');
 });

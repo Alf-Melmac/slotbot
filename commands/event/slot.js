@@ -1,5 +1,5 @@
-const Event = require('../modules/event');
-const EventUpdate = require('../helper/eventUpdate');
+const Event = require('../../modules/event');
+const EventUpdate = require('../../helper/eventUpdate');
 
 module.exports = {
     name: 'slot',
