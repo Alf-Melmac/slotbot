@@ -28,6 +28,7 @@ module.exports = {
         });
     },
 
+    //Slotting
     postSlotRequest: async function (event_channel, slot_number, userId) {
         return await fetch(`${slotbotServerUrl}/events/channel/${event_channel}/slot/${slot_number}`, {
             method: 'POST',
@@ -45,6 +46,23 @@ module.exports = {
                 'Content-Type': 'application/json'
             },
             body: userId
+        });
+    },
+
+    //Editing
+    postAddSlot: async function (event_channel, slot, squadNumber) {
+        return await fetch(`${slotbotServerUrl}/events/channel/${event_channel}/addSlot/${squadNumber}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: slot
+        });
+    },
+
+    deleteSlot: async function (event_channel, slotNumber) {
+        return await fetch(`${slotbotServerUrl}/events/channel/${event_channel}/delSlot/${slotNumber}`, {
+            method: 'DELETE'
         });
     }
 }

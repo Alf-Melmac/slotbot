@@ -16,14 +16,7 @@ class Event {
 
     static postEvent(message, event, callback) {
         eventRequest.postEventRequest(JSON.stringify(event))
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(json => callback(json));
-                } else {
-                    logger.error(response);
-                    MessageHelper.replyAndDelete(message, `${response.status} ${response.statusText}`);
-                }
-            })
+            .then(response => responseHandling(message, response, callback))
             .catch(reason => {
                 logger.error(reason);
                 MessageHelper.replyAndDelete(message, 'Des Event konnte ich nicht an den Server senden. Such dir einen Grund aus, warum nicht. Machs später nochmal.');
@@ -32,15 +25,7 @@ class Event {
 
     static putMessageIds(message, eventId, channelIds, callback) {
         eventRequest.putChannelIdsRequest(eventId, JSON.stringify(channelIds))
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(json => {/*json is the event. But we don't need it here*/
-                    });
-                } else {
-                    logger.error(response);
-                    MessageHelper.replyAndDeleteOnlySend(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe MessageIds zu setzen. Probiere es später nochmal oder Frage wen mit Ahnung.')
-                }
-            })
+            .then(response => responseHandling(message, response, () => {/*Atm we do not need the event in the callback function*/}))
             .catch(reason => {
                 logger.error(reason);
                 MessageHelper.replyAndDeleteOnlySend(message, 'Jetzt bin ich selber durcheinander gekommen wer hier warum wann Nachrichten sendet.');
@@ -51,17 +36,8 @@ class Event {
     //Get Event
     static getEventByChannel(message, callback) {
         eventRequest.getEventByChannelRequest(message.channel.id, callback)
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(json => callback(json));
-                } else {
-                    MessageHelper.replyAndDelete(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe das Event zu bekommen. Probiere es später nochmal oder Frage wen mit Ahnung.')
-                }
-            })
-            .catch(reason => {
-                logger.error(reason);
-                MessageHelper.replyAndDelete(message, 'Scheint so, als gäbe es hier gar kein Event.');
-            });
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
     }
 
     static getEventByChannelWithoutReply(messageClone, callback) {
@@ -83,25 +59,26 @@ class Event {
                     MessageHelper.replyAndDeleteOnlySend(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe dich zu slotten. Probiere es später nochmal oder Frage wen mit Ahnung.')
                 }
             })
-            .catch(reason => {
-                logger.error(reason);
-                MessageHelper.replyAndDeleteOnlySend(message, `Entweder hier gibt es kein Event oder irgendwas ist schief gelaufen.`);
-            });
+            .catch(reason => requestErrorHandling(reason, message));
     }
 
     static unslotForEvent(message, userId, callback) {
         eventRequest.postUnslotRequest(message.channel.id, userId)
-            .then(response => {
-                if (response.ok) {
-                    response.json().then(json => callback(json));
-                } else {
-                    MessageHelper.replyAndDelete(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe dich zu unslotten. Probiere es später nochmal oder Frage wen mit Ahnung.')
-                }
-            })
-            .catch(reason => {
-                logger.error(reason);
-                MessageHelper.replyAndDelete(message, `Entweder hier gibt es kein Event oder irgendwas ist schief gelaufen.`);
-            });
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
+    //Event edit
+    static addSlot(message, squadNumber, slotNumber, slotName, callback) {
+        eventRequest.postAddSlot(message.channel.id, JSON.stringify(new Slot(slotName, slotNumber)), squadNumber)
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
+    static delSlot(message, slotNumber, callback) {
+        eventRequest.deleteSlot(message.channel.id, slotNumber)
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
     }
 
     //Event messages
@@ -135,6 +112,19 @@ class Event {
 
         return slotListEmbed;
     }
+}
+
+function responseHandling(message, response, callback) {
+    if (response.ok) {
+        response.json().then(json => callback(json));
+    } else {
+        response.json().then(errorJson => MessageHelper.replyAndDelete(message, errorJson.errorMessage));
+    }
+}
+
+function requestErrorHandling(error, message) {
+    logger.error(error);
+    MessageHelper.replyAndDelete(message, 'Da ist wohl was schief gelaufen. Vielleicht gibt es hier kein Event?');
 }
 
 module.exports = Event;
