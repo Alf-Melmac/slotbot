@@ -115,11 +115,8 @@ class Event {
 }
 
 function responseHandling(message, response, callback) {
-    if (response.ok) {
-        response.json().then(json => callback(json));
-    } else {
-        response.json().then(errorJson => MessageHelper.replyAndDelete(message, errorJson.errorMessage));
-    }
+    response.json()
+        .then(json => response.ok ? callback(json) : MessageHelper.replyAndDelete(message, errorJson.errorMessage));
 }
 
 function requestErrorHandling(error, message) {
