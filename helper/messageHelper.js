@@ -12,11 +12,11 @@ class MessageHelper {
     static deleteMessagesWithTimeout(timeout) {
         for (let i = 1; i < arguments.length; i++) {
             let message = arguments[i];
-            //Deletion in DMs or groups isn't possible and would result in an error
-            if (!this.isDm(message)) {
-                message.delete({timeout: timeout})
-                    .catch(logger.warn);
+            if (message.deleted) {
+                continue;
             }
+            message.delete({timeout: timeout})
+                .catch(logger.warn);
         }
     }
 
@@ -44,15 +44,16 @@ class MessageHelper {
     static sendDmToRecipient(message, recipientId, dataToSend, callback) {
         const recipient = client.users.cache.get(recipientId);
         return recipient.send(dataToSend, {split: true})
+            .then(message => callback(message))
             .catch(error => {
                 logger.error(`Could not send DM to ${recipient.tag}.\n`, error);
                 this.replyAndDeleteOnlySend(message, `Leider kann ich ${recipient.tag} keine DM senden. Hau den doch mal für mich.`);
-            })
-            .finally(callback());
+                callback();
+            });
     }
 
-    static sendDmToRecipientAndDeleteMessage(message, recipientId, dataToSend) {
-        this.sendDmToRecipient(message, recipientId, dataToSend, () => this.deleteMessages(message));
+    static sendDmToRecipientAndDeleteMessage(message, recipientId, dataToSend, callback) {
+        this.sendDmToRecipient(message, recipientId, dataToSend, callback).finally(() => this.deleteMessages(message));
     }
 }
 

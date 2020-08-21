@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Slot = require('../modules/slot');
 const eventRequest = require("./rest/eventRequest");
+const eventChannelRequest = require("./rest/eventChannelRequest");
 
 class Event {
     constructor(name, date, startTime, description, channel, squadList, infoMsg, slotListMsg) {
@@ -35,13 +36,13 @@ class Event {
 
     //Get Event
     static getEventByChannel(message, callback) {
-        eventRequest.getEventByChannelRequest(message.channel.id, callback)
+        eventChannelRequest.getEventByChannelRequest(message.channel.id, callback)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }
 
     static getEventByChannelWithoutReply(messageClone, callback) {
-        eventRequest.getEventByChannelRequest(messageClone.channel.id, callback)
+        eventChannelRequest.getEventByChannelRequest(messageClone.channel.id, callback)
             .then(response => {
                 if (response.ok) {
                     response.json().then(json => callback(json));
@@ -51,7 +52,7 @@ class Event {
 
     //Slotting
     static slotForEvent(message, slot_number, userId, callback) {
-        eventRequest.postSlotRequest(message.channel.id, slot_number, userId)
+        eventChannelRequest.postSlotRequest(message.channel.id, slot_number, userId)
             .then(response => {
                 if (response.ok) {
                     response.json().then(json => callback(slot_number, json));
@@ -63,20 +64,26 @@ class Event {
     }
 
     static unslotForEvent(message, userId, callback) {
-        eventRequest.postUnslotRequest(message.channel.id, userId)
+        eventChannelRequest.postUnslotRequest(message.channel.id, userId)
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
+    static findSwapSlots(message, slotNumber, callback) {
+        eventChannelRequest.getSwapSlots(message.channel.id, slotNumber, message.author.id)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }
 
     //Event edit
     static addSlot(message, squadNumber, slotNumber, slotName, callback) {
-        eventRequest.postAddSlot(message.channel.id, JSON.stringify(new Slot(slotName, slotNumber)), squadNumber)
+        eventChannelRequest.postAddSlot(message.channel.id, JSON.stringify(new Slot(slotName, slotNumber)), squadNumber)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }
 
     static delSlot(message, slotNumber, callback) {
-        eventRequest.deleteSlot(message.channel.id, slotNumber)
+        eventChannelRequest.deleteSlot(message.channel.id, slotNumber)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }
@@ -116,7 +123,7 @@ class Event {
 
 function responseHandling(message, response, callback) {
     response.json()
-        .then(json => response.ok ? callback(json) : MessageHelper.replyAndDelete(message, errorJson.errorMessage));
+        .then(json => response.ok ? callback(json) : MessageHelper.replyAndDelete(message, json.errorMessage));
 }
 
 function requestErrorHandling(error, message) {
