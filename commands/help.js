@@ -5,8 +5,9 @@ module.exports = {
     description: 'Liste aller Befehle oder Information über einen Befehl.',
     argCount: [0, 1],
     aliases: ['commands'],
-    usage: '<command name>',
+    usage: '<!--suppress HtmlDeprecatedTag --><command name>',
     authorizedRoles: ['@everyone'],
+    dmAllowed: true,
     execute(message, args) {
         logger.debug('Command: help');
 
@@ -14,13 +15,17 @@ module.exports = {
         const {commands} = message.client;
 
         if (!args.length) {
+            if (MessageHelper.isDm(message)) {
+                MessageHelper.replyInDM(message, 'Um die richtigen Befehle anzeigen zu können, muss dieser Befehl auf dem Server ausgeführt werden.');
+                return;
+            }
             data.push('Liste aller Befehle:');
             data.push(
                 commands.filter(command => PermissionHelper.authorHasAtLeastOneOfRoles(message, command.authorizedRoles))
                     .map(command => command.name)
                     .join(', ')
             );
-            data.push(`\nSchicke einfach "${prefix}help [command name]" um Infos über einen bestimmten Befehl zu bekommen!`);
+            data.push(`\nSchicke einfach "${prefix}${this.name} [command name]" um Infos über einen bestimmten Befehl zu bekommen!`);
 
             return MessageHelper.sendDmAndDeleteMessage(message, data);
         }

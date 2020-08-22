@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['showevent'],
     usage: ' ',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: eventprint');
 

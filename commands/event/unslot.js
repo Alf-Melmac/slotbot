@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['forceunslot'],
     usage: '<@AuzuslottendePerson>',
     authorizedRoles: PermissionHelper.getSlotRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: unslot');
 

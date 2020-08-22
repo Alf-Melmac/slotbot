@@ -7,6 +7,7 @@ module.exports = {
     aliases: ['event', 'newevent', 'createevent'],
     usage: '<JSON>',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: eventjson');
 

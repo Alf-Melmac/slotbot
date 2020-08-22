@@ -75,10 +75,11 @@ client.on('message', message => {
         MessageHelper.replyAndDelete(message, reply);
         return;
     } else if (command.authorizedRoles) {
-        if (!PermissionHelper.authorHasAtLeastOneOfRoles(message, command.authorizedRoles)) {
-            logger.debug(`Unauthorized command usage ${commandName} from ${message.author.tag}`);
-            MessageHelper.replyAndDelete(message, 'Nene, du nicht ;)');
-            return;
+        if (!(command.dmAllowed && MessageHelper.isDm(message))) {
+            if (!PermissionHelper.authorHasAtLeastOneOfRoles(message, command.authorizedRoles)) {
+                MessageHelper.replyAndDelete(message, 'Das darfst du hier nicht.');
+                return;
+            }
         }
     }
 

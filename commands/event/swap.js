@@ -1,6 +1,7 @@
 const Event = require('../../modules/event');
 const Slot = require('../../modules/slot');
 const EventUpdate = require('../../helper/eventUpdate');
+const {prefix} = require('../../config.json');
 
 module.exports = {
     name: 'swap',
@@ -8,6 +9,7 @@ module.exports = {
     argCount: [1],
     usage: '<Slotnummer>',
     authorizedRoles: PermissionHelper.getSlotRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: swap');
 
@@ -34,7 +36,7 @@ module.exports = {
                 return;
             } else if (foreignSlotUser === "0") {
                 //TODO: Slot, if slot is empty
-                MessageHelper.replyAndDelete(message, `Der Slot ist leer. Nutze einfach !slot ${foreignSlot.number}`);
+                MessageHelper.replyAndDelete(message, `Der Slot ist leer. Nutze einfach ${prefix}slot ${foreignSlot.number}`);
                 return;
             }
 
@@ -62,7 +64,7 @@ module.exports = {
                                     } else {
                                         MessageHelper.sendDm(message, `${client.users.cache.get(foreignSlotUser)} hat deine Anfrage zum Slot tauschen abgelehnt.`, () => MessageHelper.sendDmToRecipient(message, foreignSlotUser, 'Du hast das Tauschangebot abgelehnt.', () => {}));
                                     }
-                                    MessageHelper.deleteMessages(dmMsg);
+                                    MessageHelper.deleteDm(dmMsg);
                                 });
                         });
                 }

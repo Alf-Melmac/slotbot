@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['eventdelslot'],
     usage: '<Slotnummer>',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: delslot');
 

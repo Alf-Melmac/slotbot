@@ -10,7 +10,7 @@ class PermissionHelper {
 
     static authorHasAtLeastOneOfRoles(message, roleNames) {
         if (!roleNames || MessageHelper.isDm(message)) {
-            return MessageHelper.replyAndDelete(message, 'Das darfst du hier nicht.');
+            return false;
         }
         return message.member.roles.cache.some(role => roleNames.find((roleInArray) => role.name === roleInArray));
     }

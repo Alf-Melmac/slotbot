@@ -12,7 +12,19 @@ class MessageHelper {
     static deleteMessagesWithTimeout(timeout) {
         for (let i = 1; i < arguments.length; i++) {
             let message = arguments[i];
-            if (message.deleted) {
+            //Don't delete if already deleted or DM message
+            if (message.deleted || this.isDm(message)) {
+                continue;
+            }
+            message.delete({timeout: timeout})
+                .catch(logger.warn);
+        }
+    }
+
+    static deleteDm(...args) {
+        for (let message of arguments) {
+            //Don't delete if already deleted or foreign DM message
+            if (message.deleted || (this.isDm(message) && message.author.id !== '724342751008784445')) {
                 continue;
             }
             message.delete({timeout: timeout})
@@ -26,6 +38,10 @@ class MessageHelper {
 
     static replyAndDeleteOnlySend(message, reply) {
         message.reply(reply).then(msg => this.deleteMessagesWithTimeout(standardDeletionTime, msg));
+    }
+
+    static replyInDM(message, reply) {
+        message.reply(reply);
     }
 
     static sendDm(message, dataToSend, callback) {

@@ -4,6 +4,7 @@ module.exports = {
     argCount: [1],
     usage: '<Rolle>',
     authorizedRoles: ['@everyone'],
+    dmAllowed: false,
     execute(message, args) {
         let roles = message.member.roles;
         switch (args[0].toLowerCase()) {

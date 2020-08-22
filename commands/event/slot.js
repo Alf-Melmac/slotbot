@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['forceslot'],
     usage: '<Slotnummer> <@ZuSlottendePerson>',
     authorizedRoles: PermissionHelper.getSlotRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: slot');
 

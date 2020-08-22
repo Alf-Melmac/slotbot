@@ -5,6 +5,7 @@ module.exports = {
     description: 'Admin utility!',
     argCount: [1],
     authorizedRoles: PermissionHelper.getAdministrativeRoles(),
+    dmAllowed: true,
     execute(message, args) {
         logger.debug('Command: admin');
 

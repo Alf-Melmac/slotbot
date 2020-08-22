@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['eventaddslot'],
     usage: '<Squad> <Slotnummer> <Slotname>',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
+    dmAllowed: false,
     execute(message, args) {
         logger.debug('Command: addslot');
 
