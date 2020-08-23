@@ -1,4 +1,5 @@
 const Event = require('../../modules/event');
+const EventUpdate = require('../../helper/eventUpdate');
 
 module.exports = {
     name: 'eventprint',
@@ -15,6 +16,7 @@ module.exports = {
             if (event.infoMsg && event.infoMsg !== '0' || event.slotListMsg && event.slotListMsg !== '0') {
                 //Event includes messageIds. Seems like event got already posted
                 //TODO: Überprüfung, ob die Nachricht noch existiert. Eventuell Löschevent abfangen
+                //Quick Fix: Überprüfung, ob die Nachrichten nicht gelöscht sind, falls das so ist, an den Server senden und Befehl zulassen
                 MessageHelper.sendDmAndDeleteMessage(message, `Guck erstmal da <https://discordapp.com/channels/${message.guild.id}/${event.channel}/${event.infoMsg}> oder da <https://discordapp.com/channels/${message.guild.id}/${event.channel}/${event.slotListMsg}>. Mach meinetwegen ein !updateEvent aber doch nicht nochmal posten, dass will doch keiner.`);
                 return;
             }
@@ -33,8 +35,10 @@ module.exports = {
                                 message,
                                 event.id,
                                 {infoMsg: infoMsg.id, slotListMsg: slotListMsg.id},
-                                MessageHelper.deleteMessages(message)
+                                event => EventUpdate.addEventToCache(event)
                             );
+
+                            MessageHelper.deleteMessages(message)
                         })
                 );
         });

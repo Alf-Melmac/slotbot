@@ -20,9 +20,7 @@ module.exports = {
 
         let event = JSON.parse(json);
         event.channel = message.channel.id;
-        Event.postEvent(message, event, eventJson => {
-            MessageHelper.replyAndDelete(message, eventJson)
-        });
+        Event.postEvent(message, event, eventJson => MessageHelper.replyAndDelete(message, `Event ${eventJson.name} erstellt.`));
     }
 };
 

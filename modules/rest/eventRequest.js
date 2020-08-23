@@ -4,7 +4,7 @@ const eventUrl = `${slotbotServerUrl}/events`;
 
 module.exports = {
     putChannelIdsRequest: async function (event_id, channel_ids) {
-        return await fetch(`${eventUrl}/${event_id}/msgIds`, {
+        return await fetch(`${eventUrl}/${event_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

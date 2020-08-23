@@ -26,12 +26,11 @@ class Event {
 
     static putMessageIds(message, eventId, channelIds, callback) {
         eventRequest.putChannelIdsRequest(eventId, JSON.stringify(channelIds))
-            .then(response => responseHandling(message, response, () => {/*Atm we do not need the event in the callback function*/}))
+            .then(response => responseHandling(message, response, callback))
             .catch(reason => {
                 logger.error(reason);
-                MessageHelper.replyAndDeleteOnlySend(message, 'Jetzt bin ich selber durcheinander gekommen wer hier warum wann Nachrichten sendet.');
-            })
-            .finally(() => MessageHelper.deleteMessages(message));
+                MessageHelper.replyAndDelete(message, 'Jetzt bin ich selber durcheinander gekommen wer hier warum wann Nachrichten sendet.');
+            });
     }
 
     //Get Event
@@ -54,11 +53,17 @@ class Event {
     static slotForEvent(message, slot_number, userId, callback) {
         eventChannelRequest.postSlotRequest(message.channel.id, slot_number, userId)
             .then(response => {
-                if (response.ok) {
-                    response.json().then(json => callback(slot_number, json));
-                } else {
-                    MessageHelper.replyAndDeleteOnlySend(message, 'Da kam keine positive Antwort vom Server zurück, als ich versucht habe dich zu slotten. Probiere es später nochmal oder Frage wen mit Ahnung.')
-                }
+                response.json().then(responseJson => {
+                    if (response.ok) {
+                        callback(slot_number, responseJson);
+                    } else {
+                        let reply = responseJson.errorMessage;
+                        if (response.status === 404) {
+                            reply = 'Es konnte nicht geslottet werden, weil das Event oder der Slot nicht gefunden wurde.';
+                        }
+                        MessageHelper.replyAndDelete(message, reply);
+                    }
+                });
             })
             .catch(reason => requestErrorHandling(reason, message));
     }
@@ -122,13 +127,24 @@ class Event {
 }
 
 function responseHandling(message, response, callback) {
-    response.json()
-        .then(json => response.ok ? callback(json) : MessageHelper.replyAndDelete(message, json.errorMessage));
+    response.json().then(responseJson => {
+        if (response.ok) {
+            callback(responseJson);
+        } else {
+            let reply = responseJson.errorMessage;
+            if (response.status === 404) {
+                reply = `Hier konnte kein Event gefunden werden. \n > ${reply}`;
+            } else if (response.status === 403) {
+                reply = `Du bist nicht berechtigt das auszuführen. \n > ${reply}`;
+            }
+            MessageHelper.replyAndDelete(message, reply);
+        }
+    });
 }
 
 function requestErrorHandling(error, message) {
     logger.error(error);
-    MessageHelper.replyAndDelete(message, 'Da ist wohl was schief gelaufen. Vielleicht gibt es hier kein Event?');
+    MessageHelper.replyAndDelete(message, `Da ist wohl was schief gelaufen. Vielleicht gibt es hier kein Event? \n > ${error.code}`);
 }
 
 module.exports = Event;

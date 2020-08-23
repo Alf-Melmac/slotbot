@@ -26,7 +26,7 @@ class EventUpdate {
     }
 
     static updateWithGivenEvent(message, event) {
-        if (!event.infoMsg || !event.slotListMsg) {
+        if (!event.infoMsg || event.infoMsg === "0" || !event.slotListMsg || event.slotListMsg === "0") {
             MessageHelper.replyAndDelete(message, `Gib das Event zu erst mit ${prefix}eventPrint aus`);
             return;
         }
@@ -37,14 +37,11 @@ class EventUpdate {
     }
 
     static updateIfNotCached(message, event) {
-        if (_.isEqualWith(eventCache.get(event.channel), event)) {
-            //No update required
+        if (!this.addEventToCache(event)) {
             return;
-        } else {
-            eventCache.set(event.channel, event);
         }
 
-        console.log('Update');
+        logger.debug('Update');
 
         message.channel.messages.fetch(event.infoMsg)
             //Building a new embed to prevent caching problems. See: https://discordjs.guide/popular-topics/embeds.html#resending-a-received-embed
@@ -55,6 +52,15 @@ class EventUpdate {
             //Building a new embed to prevent caching problems
             .then(infoMsg => infoMsg.edit(Event.createSlotListEmbed(event)))
             .catch(logger.error);
+    }
+
+    static addEventToCache(event) {
+        if (_.isEqualWith(eventCache.get(event.channel), event)) {
+            //No update required
+            return false;
+        }
+        eventCache.set(event.channel, event);
+        return true;
     }
 }
 
