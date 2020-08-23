@@ -27,7 +27,7 @@ class MessageHelper {
             if (message.deleted || (this.isDm(message) && message.author.id !== '724342751008784445')) {
                 continue;
             }
-            message.delete({timeout: timeout})
+            message.delete()
                 .catch(logger.warn);
         }
     }

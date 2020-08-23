@@ -72,7 +72,7 @@ client.on('message', message => {
         if (command.usage) {
             reply += `\nSo funktioniert der Befehl: \`${prefix}${command.name} ${command.usage}\``;
         }
-        MessageHelper.replyAndDelete(message, reply);
+        MessageHelper.sendDmAndDeleteMessage(message, reply);
         return;
     } else if (command.authorizedRoles) {
         if (!(command.dmAllowed && MessageHelper.isDm(message))) {
