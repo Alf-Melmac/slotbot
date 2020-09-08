@@ -1,10 +1,6 @@
 const {slotbotServerUrl} = require('../../config.json');
-const fetch = require("node-fetch");
+const Request = require('../../helper/request');
 
 module.exports = {
-    getPingRequest: async function () {
-        return await fetch(`${slotbotServerUrl}/status`, {
-            method: 'GET'
-        });
-    }
+    getPingRequest: () => Request.GET(`${slotbotServerUrl}/status`)
 }

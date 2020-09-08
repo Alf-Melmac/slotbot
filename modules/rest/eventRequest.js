@@ -1,25 +1,9 @@
 const {slotbotServerUrl} = require('../../config.json');
-const fetch = require("node-fetch");
 const eventUrl = `${slotbotServerUrl}/events`;
+const Request = require('../../helper/request');
 
 module.exports = {
-    putChannelIdsRequest: async function (event_id, channel_ids) {
-        return await fetch(`${eventUrl}/${event_id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: channel_ids
-        });
-    },
+    putChannelIdsRequest: (event_id, channel_ids) => Request.PUT(`${eventUrl}/${event_id}`, channel_ids),
 
-    postEventRequest: async function (event) {
-        return await fetch(`${eventUrl}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: event
-        });
-    }
+    postEventRequest: (event) => Request.POST(`${eventUrl}`, event)
 }

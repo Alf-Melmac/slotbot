@@ -21,7 +21,7 @@ class Slot {
     }
 
     static swap(message, slots, callback) {
-        slotRequest.putSwapRequest(JSON.stringify(slots))
+        slotRequest.putSwapRequest(slots)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }

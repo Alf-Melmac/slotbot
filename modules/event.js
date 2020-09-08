@@ -17,7 +17,7 @@ class Event {
     }
 
     static postEvent(message, event, callback) {
-        eventRequest.postEventRequest(JSON.stringify(event))
+        eventRequest.postEventRequest(event)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => {
                 logger.error(reason);
@@ -26,7 +26,7 @@ class Event {
     }
 
     static putMessageIds(message, eventId, channelIds, callback) {
-        eventRequest.putChannelIdsRequest(eventId, JSON.stringify(channelIds))
+        eventRequest.putChannelIdsRequest(eventId, channelIds)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => {
                 logger.error(reason);
@@ -83,7 +83,7 @@ class Event {
 
     //Event edit
     static addSlot(message, squadNumber, slotNumber, slotName, callback) {
-        eventChannelRequest.postAddSlot(message.channel.id, JSON.stringify(new Slot(slotName, slotNumber)), squadNumber)
+        eventChannelRequest.postAddSlot(message.channel.id, new Slot(slotName, slotNumber), squadNumber)
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }
