@@ -1,11 +1,11 @@
 const slotRequest = require("./rest/slotRequest");
 
 class Slot {
-    constructor(name, number, squad, userId) {
+    constructor(name, number, squad, user) {
         this.name = name;
         this.number = number;
         this.squad = squad;
-        this.userId = userId;
+        this.user = user;
     }
 
     static objToSlot(obj) {
@@ -14,8 +14,8 @@ class Slot {
 
     toString() {
         let str = `**${this.number}** ${this.name}: `;
-        if (this.userId && this.userId !== '0') {
-            str += `<@${this.userId}>`;
+        if (this.user && this.user.id) {
+            str += `<@${this.user.id}>`;
         }
         return str;
     }

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const Slot = require('../modules/slot');
+const User = require('../modules/user');
 const eventRequest = require("./rest/eventRequest");
 const eventChannelRequest = require("./rest/eventChannelRequest");
 
@@ -51,7 +52,7 @@ class Event {
 
     //Slotting
     static slotForEvent(message, slot_number, userId, callback) {
-        eventChannelRequest.postSlotRequest(message.channel.id, slot_number, userId)
+        eventChannelRequest.postSlotRequest(message.channel.id, slot_number, new User(userId))
             .then(response => {
                 response.json().then(responseJson => {
                     if (response.ok) {
@@ -69,13 +70,13 @@ class Event {
     }
 
     static unslotForEvent(message, userId, callback) {
-        eventChannelRequest.postUnslotRequest(message.channel.id, userId)
+        eventChannelRequest.postUnslotRequest(message.channel.id, new User(userId))
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }
 
     static findSwapSlots(message, slotNumber, callback) {
-        eventChannelRequest.getSwapSlots(message.channel.id, slotNumber, message.author.id)
+        eventChannelRequest.getSwapSlots(message.channel.id, slotNumber, new User(message.author.id))
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
     }

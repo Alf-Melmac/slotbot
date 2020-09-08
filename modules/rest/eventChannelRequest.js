@@ -10,29 +10,33 @@ module.exports = {
     },
 
     //Slotting
-    postSlotRequest: async function (event_channel, slot_number, userId) {
+    postSlotRequest: async function (event_channel, slot_number, user) {
         return await fetch(`${eventChannelUrl}/${event_channel}/slot/${slot_number}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: userId
+            body: JSON.stringify(user)
         });
     },
 
-    postUnslotRequest: async function (event_channel, userId) {
+    postUnslotRequest: async function (event_channel, user) {
         return await fetch(`${eventChannelUrl}/${event_channel}/unslot`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: userId
+            body: JSON.stringify(user)
         });
     },
 
-    getSwapSlots: async function (event_channel, slotNumber, userId) {
-        return await fetch(`${eventChannelUrl}/${event_channel}/prepareSwap/${slotNumber}/${userId}`, {
-            method: 'GET'
+    getSwapSlots: async function (event_channel, slotNumber, user) {
+        return await fetch(`${eventChannelUrl}/${event_channel}/prepareSwap/${slotNumber}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
         });
     },
 

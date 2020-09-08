@@ -14,29 +14,24 @@ module.exports = {
         logger.debug('Command: swap');
 
         Event.findSwapSlots(message, args[0], slots => {
-            let ownSlot = slots[0];
-            let foreignSlot = slots[1];
+            const ownSlot = slots[0];
+            const foreignSlot = slots[1];
 
-            let ownSlotUser = ownSlot.userId;
-            let foreignSlotUser = foreignSlot.userId;
-            let authorUser = message.author.id;
-
-            //Swap slots, if the order has been confused
-            if (ownSlotUser !== authorUser) {
-                if (foreignSlotUser === authorUser) {
-                    let tmpSlot = ownSlot;
-                    ownSlot = foreignSlot;
-                    foreignSlot = tmpSlot;
-                }
+            if (!ownSlot.user || !foreignSlot.user) {
+                //TODO: Slot, if slot is empty
+                MessageHelper.replyAndDelete(message, `Der Slot ist leer. Nutze einfach ${prefix}slot ${foreignSlot.number}`);
+                return;
             }
+
+            const foreignSlotUser = foreignSlot.user.id;
+            const authorUser = message.author.id;
 
             if (foreignSlotUser === authorUser) {
                 //No action needed if user is already on this slot
                 MessageHelper.deleteMessages(message);
                 return;
-            } else if (foreignSlotUser === "0") {
-                //TODO: Slot, if slot is empty
-                MessageHelper.replyAndDelete(message, `Der Slot ist leer. Nutze einfach ${prefix}slot ${foreignSlot.number}`);
+            } else if (ownSlot.user.id !== authorUser) {
+                MessageHelper.replyAndDelete(message, 'Tja, da ist ein Reihenfolgeproblem aufgetreten. Versuche es nochmal oder kontaktiere einen Administrator.');
                 return;
             }
 

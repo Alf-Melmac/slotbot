@@ -13,7 +13,7 @@ module.exports = {
         logger.debug('Command: eventprint');
 
         Event.getEventByChannel(message, event => {
-            if (event.infoMsg && event.infoMsg !== '0' || event.slotListMsg && event.slotListMsg !== '0') {
+            if (event.infoMsg || event.slotListMsg) {
                 //Event includes messageIds. Seems like event got already posted
                 //TODO: Überprüfung, ob die Nachricht noch existiert. Eventuell Löschevent abfangen
                 //Quick Fix: Überprüfung, ob die Nachrichten nicht gelöscht sind, falls das so ist, an den Server senden und Befehl zulassen
