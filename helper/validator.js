@@ -9,7 +9,7 @@ class Validator {
 
     static isUser(id) {
         //For 18 characters we can assume that it is a Discord User ID
-        return Math.ceil(Math.log10(id + 1)) === 16;
+        return Math.ceil(Math.log10(id)) === 18;
     }
 }
 

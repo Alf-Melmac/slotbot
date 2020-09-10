@@ -1,5 +1,6 @@
 const Event = require('../../modules/event');
 const EventUpdate = require('../../helper/eventUpdate');
+const Validator = require('../../helper/validator');
 
 module.exports = {
     name: 'unslot',
@@ -19,15 +20,25 @@ module.exports = {
                 EventUpdate.updateWithGivenEvent(message, event);
             });
         } else /*if (args.length === 1)*/ {
-            let recipientId = args[0].replace(/\D/g, '');
             if (PermissionHelper.hasEventManageRole(message)) {
-                Event.unslotForEvent(message, recipientId, (event) => {
-                    MessageHelper.sendDmToRecipient(message, recipientId, `${message.author} hat dich für das Event ${event.name} am ${event.date} ausgetragen.`, () => {});
-                    EventUpdate.updateWithGivenEvent(message, event);
-                });
+                const id = args[0].replace(/\D/g, '');
+                if (Validator.isUser(id)) {
+                    Event.unslotForEvent(message, id, (event) => {
+                        sendDmAndUpdateEvent(message, id, event);
+                    });
+                } else {
+                    Event.unslotSlotForEvent(message, id, (event) => {
+                        sendDmAndUpdateEvent(message, new Event(event).findUserOfSlot(id), event);
+                    });
+                }
             } else {
                 MessageHelper.replyAndDelete(message, 'Du darfst leider keine anderen Personen ausslotten.');
             }
         }
     }
 };
+
+function sendDmAndUpdateEvent(message, recipientId, event) {
+    MessageHelper.sendDmToRecipient(message, recipientId, `${message.author} hat dich für das Event ${event.name} am ${event.date} ausgetragen.`, () => {});
+    EventUpdate.updateWithGivenEvent(message, event);
+}

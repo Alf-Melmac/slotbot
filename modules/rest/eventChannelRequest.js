@@ -10,6 +10,8 @@ module.exports = {
 
     postUnslotRequest: (event_channel, user) => Request.POST(`${eventChannelUrl}/${event_channel}/unslot`, user),
 
+    postUnslotSlotRequest: (event_channel, slotNumber) => Request.POST(`${eventChannelUrl}/${event_channel}/unslot/${slotNumber}`),
+
     getSwapSlots: (event_channel, slotNumber, user) => Request.PUT(`${eventChannelUrl}/${event_channel}/prepareSwap/${slotNumber}`, user),
 
     //Editing
