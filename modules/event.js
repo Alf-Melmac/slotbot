@@ -5,7 +5,7 @@ const eventRequest = require("./rest/eventRequest");
 const eventChannelRequest = require("./rest/eventChannelRequest");
 
 class Event {
-    /*constructor(name, date, startTime, description, channel, squadList, infoMsg, slotListMsg) {
+    constructor(name, date, startTime, description, channel, squadList, infoMsg, slotListMsg) {
         this.name = name;
         this.date = date;
         this.startTime = startTime;
@@ -14,23 +14,6 @@ class Event {
         this.squadList = squadList;
         this.infoMsg = infoMsg;
         this.slotListMsg = slotListMsg;
-    }*/
-
-    constructor(obj) {
-        obj && Object.assign(this, obj);
-    }
-
-    findUserOfSlot(slotNumber) {
-        const slotNumberInt = parseInt(slotNumber);
-        for (const squad of this.squadList) {
-            for (const slot of squad.slotList) {
-                if (slot.number === slotNumberInt) {
-                    //TODO ID IST WEG; WTF
-                    return slot.user.id;
-                }
-            }
-        }
-        return null;
     }
 
     static postEvent(message, event, callback) {

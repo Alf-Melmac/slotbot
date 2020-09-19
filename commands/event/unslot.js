@@ -27,8 +27,8 @@ module.exports = {
                         sendDmAndUpdateEvent(message, id, event);
                     });
                 } else {
-                    Event.unslotSlotForEvent(message, id, (event) => {
-                        sendDmAndUpdateEvent(message, new Event(event).findUserOfSlot(id), event);
+                    Event.unslotSlotForEvent(message, id, (eventAction) => {
+                        sendDmAndUpdateEvent(message, eventAction.recipient.id, eventAction);
                     });
                 }
             } else {
