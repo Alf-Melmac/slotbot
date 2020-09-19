@@ -7,9 +7,13 @@ class Validator {
         return !time.match('^([0-2][0-3]|[0-1][0-9]):[0-5][0-9]+$');
     }
 
-    static isUser(id) {
-        //For 18 characters we can assume that it is a Discord User ID
-        return Math.ceil(Math.log10(id)) === 18;
+    static isUserMention(s) {
+        //For 18 digits we can assume that it is a Discord User ID
+        return /^<@!\d{18}>$/.test(s);
+    }
+
+    static onlyNumbers(s) {
+        return /\D/.test(s);
     }
 }
 

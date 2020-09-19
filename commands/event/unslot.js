@@ -22,14 +22,16 @@ module.exports = {
         } else /*if (args.length === 1)*/ {
             if (PermissionHelper.hasEventManageRole(message)) {
                 const id = args[0].replace(/\D/g, '');
-                if (Validator.isUser(id)) {
-                    Event.unslotForEvent(message, id, (event) => {
-                        sendDmAndUpdateEvent(message, id, event);
-                    });
+
+                if (Validator.isUserMention(args[0])) {
+                    Event.unslotForEvent(message, id, (event) => sendDmAndUpdateEvent(message, id, event));
                 } else {
-                    Event.unslotSlotForEvent(message, id, (eventAction) => {
-                        sendDmAndUpdateEvent(message, eventAction.recipient.id, eventAction);
-                    });
+                    if (Validator.onlyNumbers(args[0])) {
+                        MessageHelper.replyAndDelete(message, 'Bitte übergebe eine Slotnummer oder einen Nutzer.');
+                        return;
+                    }
+
+                    Event.unslotSlotForEvent(message, id, (eventAction) => sendDmAndUpdateEvent(message, eventAction.recipient.id, eventAction));
                 }
             } else {
                 MessageHelper.replyAndDelete(message, 'Du darfst leider keine anderen Personen ausslotten.');

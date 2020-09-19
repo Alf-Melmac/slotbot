@@ -13,12 +13,12 @@ module.exports = {
     execute(message, args) {
         logger.debug('Command: slot');
 
-        if (args.length === 1) {
-            if (Validator.isUser(args[0].replace(/\D/g, ''))) {
-                MessageHelper.replyAndDelete(message, 'Bitte gebe eine Slotnummer an.');
-                return;
-            }
+        if (Validator.onlyNumbers(args[0])) {
+            MessageHelper.replyAndDelete(message, 'Bitte übergebe an erster Stelle eine Slotnummer.');
+            return;
+        }
 
+        if (args.length === 1) {
             //Self slot
             Event.slotForEvent(message, args[0], message.author.id, (slotNumber, event) => {
                 MessageHelper.sendDm(message, `Du hast dich für das Event ${event.name} am ${event.date} auf den Slot ${slotNumber} eingetragen.`, () => {} );
@@ -27,6 +27,11 @@ module.exports = {
         } else /*if (args.length === 2)*/ {
             let recipientId = args[1].replace(/\D/g, '');
             if (PermissionHelper.hasEventManageRole(message)) {
+                if (!Validator.isUserMention(args[1])) {
+                    MessageHelper.replyAndDelete(message, 'Bitte übergebe an zweiter Stelle eine Person.');
+                    return;
+                }
+
                 Event.slotForEvent(message, args[0], recipientId, (slotNumber, event) => {
                     MessageHelper.sendDmToRecipient(message, recipientId, `Der Kacknoob ${message.author} hat dich für das Event ${event.name} am ${event.date} auf den Slot ${slotNumber} eingetragen. Dies ist eine Diktatur.`, () => {});
                     EventUpdate.updateWithGivenEvent(message, event);
