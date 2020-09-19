@@ -1,5 +1,6 @@
 const Event = require('../../modules/event');
 const EventUpdate = require('../../helper/eventUpdate');
+const Validator = require("../../helper/validator");
 
 module.exports = {
     name: 'slot',
@@ -13,6 +14,11 @@ module.exports = {
         logger.debug('Command: slot');
 
         if (args.length === 1) {
+            if (Validator.isUser(args[0].replace(/\D/g, ''))) {
+                MessageHelper.replyAndDelete(message, 'Bitte gebe eine Slotnummer an.');
+                return;
+            }
+
             //Self slot
             Event.slotForEvent(message, args[0], message.author.id, (slotNumber, event) => {
                 MessageHelper.sendDm(message, `Du hast dich für das Event ${event.name} am ${event.date} auf den Slot ${slotNumber} eingetragen.`, () => {} );
