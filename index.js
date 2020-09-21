@@ -48,7 +48,7 @@ client.on('message', message => {
     //Ignore message without prefix or from other bots
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-    logger.debug(`Received command: ${message}`);
+    logger.debug(`Received command: ${message} from ${message.author.id}`);
 
     let args = message.content.slice(prefix.length);
     //Only split, if message isn't in JSON format
