@@ -35,6 +35,12 @@ class Event {
             });
     }
 
+    static delEvent(message, callback) {
+        eventChannelRequest.deleteEvent(message.channel.id)
+            .then(callback)
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
     //Get Event
     static getEventByChannel(message, callback) {
         eventChannelRequest.getEventByChannelRequest(message.channel.id, callback)

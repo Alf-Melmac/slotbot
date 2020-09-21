@@ -5,6 +5,8 @@ const Request = require('../../helper/request');
 module.exports = {
     getEventByChannelRequest: (event_channel) => Request.GET(`${eventChannelUrl}/${event_channel}`),
 
+    deleteEvent: (event_channel) => Request.DELETE(`${eventChannelUrl}/${event_channel}`),
+
     //Slotting
     postSlotRequest: (event_channel, slot_number, user) => Request.POST(`${eventChannelUrl}/${event_channel}/slot/${slot_number}`, user),
 

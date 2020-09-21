@@ -5,7 +5,7 @@ module.exports = {
     name: 'renameslot',
     description: 'Ermöglicht es einen Slot umzubenennen',
     argCount: [2],
-    aliases: ['editslot'],
+    aliases: ['editslot', 'eventrenameslot'],
     usage: '<Slotnummer> "<Slotname>"',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
     dmAllowed: false,

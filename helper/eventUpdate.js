@@ -4,21 +4,6 @@ let eventCache = new Map();
 const Event = require('../modules/event');
 
 class EventUpdate {
-    static updateAfterDelay(message) {
-        setTimeout(() => this.updateWithoutReply(message), 1000);
-    }
-
-    //TODO Check functionality
-    static updateWithoutReply(message) {
-        Event.getEventByChannelWithoutReply(message, event => {
-            if (!event.infoMsg || !event.slotListMsg) {
-                return;
-            }
-
-            this.updateIfNotCached(message, event);
-        });
-    }
-
     static update(message) {
         Event.getEventByChannel(message, event => {
             this.updateWithGivenEvent(message, event);
