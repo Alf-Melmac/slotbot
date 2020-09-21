@@ -56,7 +56,8 @@ client.on('message', message => {
         //Regex to validate json string
         args = args.match(/(?:[^\s"]+|"[^"]*")+/g);
     } else {
-        args = args.replace(/\s+/, '\x01').split('\x01')
+        //Split on spaces except in quotes
+        args = args.split(/\w+|"\w*"/g);
     }
     const commandName = args.shift().toLowerCase();
 

@@ -101,6 +101,12 @@ class Event {
             .catch(reason => requestErrorHandling(reason, message));
     }
 
+    static renameSlot(message, slotNumber, slotName, callback) {
+        eventChannelRequest.renameSlot(message.channel.id, slotNumber, new Slot(slotName))
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
     //Event messages
     static createEventEmbed(event) {
         // noinspection UnnecessaryLocalVariableJS
@@ -131,7 +137,7 @@ function responseHandling(message, response, callback) {
         } else {
             let reply = responseJson.errorMessage;
             if (response.status === 404) {
-                reply = `Hier konnte kein Event gefunden werden. \n > ${reply}`;
+                reply = `Das angefragte konnte nicht gefunden werden. \n > ${reply}`;
             } else if (response.status === 403) {
                 reply = `Du bist nicht berechtigt das auszuführen. \n > ${reply}`;
             }

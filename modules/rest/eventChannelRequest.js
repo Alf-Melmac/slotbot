@@ -17,5 +17,7 @@ module.exports = {
     //Editing
     postAddSlot: (event_channel, slot, squadNumber) => Request.POST(`${eventChannelUrl}/${event_channel}/addSlot/${squadNumber}`, slot),
 
-    deleteSlot: (event_channel, slotNumber) => Request.DELETE(`${eventChannelUrl}/${event_channel}/delSlot/${slotNumber}`)
+    deleteSlot: (event_channel, slotNumber) => Request.DELETE(`${eventChannelUrl}/${event_channel}/delSlot/${slotNumber}`),
+
+    renameSlot: (event_channel, slotNumber, slotName) => Request.PUT(`${eventChannelUrl}/${event_channel}/renameSlot/${slotNumber}`, slotName)
 }
