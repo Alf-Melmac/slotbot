@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Squad = require('../modules/squad');
 const Slot = require('../modules/slot');
 const User = require('../modules/user');
 const eventRequest = require("./rest/eventRequest");
@@ -113,23 +114,13 @@ class Event {
         return eventEmbed;
     }
 
-    static createSlotListEmbed(event) {
-        let slotListEmbed = new Discord.MessageEmbed()
-            .setTitle("Teilnahmeplatzaufzählung");
+    static createSlotListMessage(event) {
+        let slotListMessage = '__**Teilnahmeplatzaufzählung**__';
 
         for (let squad of event.squadList) {
-            let slotList = '';
-            for (let slot of squad.slotList) {
-                //Needed to call a method from a object, because no casting is available
-                slotList += Slot.prototype.toString.call(slot) + '\n';
-            }
-            //Add squad as field
-            slotListEmbed.addField(squad.name, slotList);
-            //Add spacer between squads
-            slotListEmbed.addField('\u200B', '\u200B');
+            slotListMessage += '\n\n' + Squad.prototype.toString.call(squad);
         }
-
-        return slotListEmbed;
+        return slotListMessage;
     }
 }
 

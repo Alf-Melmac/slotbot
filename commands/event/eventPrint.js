@@ -25,7 +25,7 @@ module.exports = {
             message.channel.send(Event.createEventEmbed(event))
                 .then(infoMsg =>
                     //Send SlotList
-                    message.channel.send(Event.createSlotListEmbed(event))
+                    message.channel.send(Event.createSlotListMessage(event))
                         .then(slotListMsg => {
                             //Pin message and delete pin information
                             slotListMsg.pin().then(pinMsg => MessageHelper.deleteMessages(pinMsg.channel.lastMessage));

@@ -44,13 +44,11 @@ class EventUpdate {
         logger.debug('Update');
 
         message.channel.messages.fetch(event.infoMsg)
-            //Building a new embed to prevent caching problems. See: https://discordjs.guide/popular-topics/embeds.html#resending-a-received-embed
             .then(infoMsg => infoMsg.edit(Event.createEventEmbed(event)))
             .catch(logger.error);
 
         message.channel.messages.fetch(event.slotListMsg)
-            //Building a new embed to prevent caching problems
-            .then(infoMsg => infoMsg.edit(Event.createSlotListEmbed(event)))
+            .then(infoMsg => infoMsg.edit(Event.createSlotListMessage(event)))
             .catch(logger.error);
     }
 
