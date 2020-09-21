@@ -53,11 +53,21 @@ client.on('message', message => {
     let args = message.content.slice(prefix.length);
     //Only split, if message isn't in JSON format
     if (!args.toLowerCase().startsWith('eventjson')) {
-        //Regex to validate json string
-        args = args.match(/(?:[^\s"]+|"[^"]*")+/g);
-    } else {
         //Split on spaces except in quotes
-        args = args.split(/\w+|"\w*"/g);
+        args = args.match(/(?:[^\s"]+|"[^"]*")+/g);
+        args.forEach(function (item, i) {
+                let arg = item.trim();
+                if (arg.startsWith('"') && arg.endsWith('"')) {
+                    //Removes the enclosing quotes
+                    arg = arg.replace(/^"|"$/g, '');
+                }
+                args[i] = arg;
+            }
+        );
+    } else {
+        //For these special commands everything after the command is handled as one argument. Validation and potential splitting must be done by the position called up
+        const indexOfCommandEnd = args.indexOf(' ');
+        args = [args.substring(0, indexOfCommandEnd), args.substring(indexOfCommandEnd + 1)];
     }
     const commandName = args.shift().toLowerCase();
 

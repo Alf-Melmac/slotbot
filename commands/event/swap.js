@@ -16,7 +16,7 @@ module.exports = {
         logger.debug('Command: swap');
 
         //TODO Enable swap with @username
-        if (!Validator.onlyNumbers(args[0])) {
+        if (Validator.onlyNumbers(args[0])) {
             MessageHelper.replyAndDelete(message, 'Bitte gebe die Slotnummer an. Ein Tausch durch Angabe des Benutzernamens ist noch nicht möglich.');
             return;
         }
