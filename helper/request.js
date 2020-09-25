@@ -1,9 +1,13 @@
 const fetch = require("node-fetch");
+const {slotbotAuthTokenName, slotbotAuthToken} = require('../config.json');
 
 class Request {
     static async GET(url) {
         return await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                [slotbotAuthTokenName]: slotbotAuthToken
+            }
         });
     }
 
@@ -11,7 +15,8 @@ class Request {
         return await fetch(url, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                [slotbotAuthTokenName]: slotbotAuthToken
             },
             body: JSON.stringify(body)
         });
@@ -21,7 +26,8 @@ class Request {
         return await fetch(url, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                [slotbotAuthTokenName]: slotbotAuthToken
             },
             body: JSON.stringify(body)
         });
@@ -29,7 +35,10 @@ class Request {
 
     static async DELETE(url) {
         return await fetch(url, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                [slotbotAuthTokenName]: slotbotAuthToken
+            }
         });
     }
 }
