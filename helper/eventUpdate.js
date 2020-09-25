@@ -1,7 +1,8 @@
 const {prefix} = require('../config.json');
 const _ = require('lodash');
-let eventCache = new Map();
 const Event = require('../modules/event');
+const EventPrint = require('../helper/eventPrint');
+let eventCache = new Map();
 
 class EventUpdate {
     static update(message) {
@@ -23,17 +24,17 @@ class EventUpdate {
 
     static updateIfNotCached(message, event) {
         if (!this.addEventToCache(event)) {
-            return;
+            // return;
         }
 
         logger.debug('Update');
 
         message.channel.messages.fetch(event.infoMsg)
-            .then(infoMsg => infoMsg.edit(Event.createEventEmbed(event)))
+            .then(infoMsg => infoMsg.edit(EventPrint.createEventEmbed(event)))
             .catch(logger.error);
 
         message.channel.messages.fetch(event.slotListMsg)
-            .then(infoMsg => infoMsg.edit(Event.createSlotListMessage(event)))
+            .then(infoMsg => infoMsg.edit(EventPrint.createSlotListMessage(event)))
             .catch(logger.error);
     }
 

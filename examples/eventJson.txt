@@ -1,8 +1,7 @@
 !eventjson {
-  "name": "EventX",
-  "date": "2020-08-09",
-  "startTime": "10:00",
-  "description": "Eine Beschreibung",
+  "name": "Event1",
+  "date": "2021-01-01",
+  "startTime": "18:00",
   "squadList": [
     {
       "name": "Squad1",
@@ -30,5 +29,15 @@
         }
       ]
     }
-  ]
+  ],
+  "description": "Eine Eventbeschreibung",
+  "missionType": "COOP",
+  "missionLength": "3 Stunden",
+  "reserveParticipating": true,
+  "modPack": "2008_ArmaMachtBock",
+  "map": "Tanoa",
+  "missionTime": "Dämmerung",
+  "navigation": "GPS und CTAB",
+  "technicalTeleport": "Nicht vorhanden",
+  "medicalSystem": "AMB"
 }

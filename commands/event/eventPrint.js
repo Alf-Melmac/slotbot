@@ -1,4 +1,5 @@
 const Event = require('../../modules/event');
+const EventPrint = require('../../helper/eventPrint');
 const EventUpdate = require('../../helper/eventUpdate');
 
 module.exports = {
@@ -22,24 +23,27 @@ module.exports = {
             }
 
             //Send event infos
-            message.channel.send(Event.createEventEmbed(event))
-                .then(infoMsg =>
-                    //Send SlotList
-                    message.channel.send(Event.createSlotListMessage(event))
-                        .then(slotListMsg => {
-                            //Pin message and delete pin information
-                            slotListMsg.pin().then(pinMsg => MessageHelper.deleteMessages(pinMsg.channel.lastMessage));
+            message.channel.send(EventPrint.createEventEmbed(event))
+                .then(infoMsg => {
+                        //Send Spacer
+                        message.channel.send('https://cdn.discordapp.com/attachments/759147249325572097/759147407040315413/AMB_Missionstrenner_Discord.png');
+                        //Send SlotList
+                        message.channel.send(EventPrint.createSlotListMessage(event))
+                            .then(slotListMsg => {
+                                //Pin message and delete pin information
+                                slotListMsg.pin().then(pinMsg => MessageHelper.deleteMessages(pinMsg.channel.lastMessage));
 
-                            //Send msgIds to database
-                            Event.putMessageIds(
-                                message,
-                                event.id,
-                                {infoMsg: infoMsg.id, slotListMsg: slotListMsg.id},
-                                event => EventUpdate.addEventToCache(event)
-                            );
+                                //Send msgIds to database
+                                Event.putMessageIds(
+                                    message,
+                                    event.id,
+                                    {infoMsg: infoMsg.id, slotListMsg: slotListMsg.id},
+                                    event => EventUpdate.addEventToCache(event)
+                                );
 
-                            MessageHelper.deleteMessages(message)
-                        })
+                                MessageHelper.deleteMessages(message)
+                            })
+                    }
                 );
         });
     }

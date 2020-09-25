@@ -1,20 +1,29 @@
-const Discord = require('discord.js');
-const Squad = require('../modules/squad');
 const Slot = require('../modules/slot');
 const User = require('../modules/user');
 const eventRequest = require("./rest/eventRequest");
 const eventChannelRequest = require("./rest/eventChannelRequest");
 
 class Event {
-    constructor(name, date, startTime, description, channel, squadList, infoMsg, slotListMsg) {
+    constructor(name, date, startTime, channel, squadList, infoMsg, slotListMsg, description, missionType, missionLength,
+                reserveParticipating, modPack, map, missionTime, navigation, technicalTeleport, medicalSystem) {
         this.name = name;
         this.date = date;
         this.startTime = startTime;
-        this.description = description;
         this.channel = channel;
         this.squadList = squadList;
         this.infoMsg = infoMsg;
         this.slotListMsg = slotListMsg;
+        this.description = description;
+
+        this.missionType = missionType;
+        this.missionLength = missionLength;
+        this.reserveParticipating = reserveParticipating;
+        this.modPack = modPack;
+        this.map = map;
+        this.missionTime = missionTime;
+        this.navigation = navigation;
+        this.technicalTeleport = technicalTeleport;
+        this.medicalSystem = medicalSystem;
     }
 
     static postEvent(message, event, callback) {
@@ -111,28 +120,6 @@ class Event {
         eventChannelRequest.renameSlot(message.channel.id, slotNumber, new Slot(slotName))
             .then(response => responseHandling(message, response, callback))
             .catch(reason => requestErrorHandling(reason, message));
-    }
-
-    //Event messages
-    static createEventEmbed(event) {
-        // noinspection UnnecessaryLocalVariableJS
-        let eventEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle(event.name)
-            //.setURL('Event url')
-            .setDescription(event.description)
-            //.setThumbnail('Event picture');
-            .addField("Startzeit", event.startTime)
-        return eventEmbed;
-    }
-
-    static createSlotListMessage(event) {
-        let slotListMessage = '__**Teilnahmeplatzaufzählung**__';
-
-        for (let squad of event.squadList) {
-            slotListMessage += '\n\n' + Squad.prototype.toString.call(squad);
-        }
-        return slotListMessage;
     }
 }
 
