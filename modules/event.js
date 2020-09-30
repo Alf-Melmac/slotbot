@@ -103,6 +103,12 @@ class Event {
             .catch(reason => requestErrorHandling(reason, message));
     }
 
+    static blockSlot(message, slotNumber, replacementName, callback) {
+        eventChannelRequest.putBlockSlot(message.channel.id, slotNumber, replacementName)
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
     //Event edit
     static addSlot(message, squadNumber, slotNumber, slotName, callback) {
         eventChannelRequest.postAddSlot(message.channel.id, new Slot(slotName, slotNumber), squadNumber)

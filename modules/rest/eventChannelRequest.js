@@ -16,6 +16,8 @@ module.exports = {
 
     getSwapSlots: (event_channel, slotNumber, user) => Request.PUT(`${eventChannelUrl}/${event_channel}/prepareSwap/${slotNumber}`, user),
 
+    putBlockSlot: (event_channel, slotNumber, replacementName) => Request.PUT(`${eventChannelUrl}/${event_channel}/blockSlot/${slotNumber}`, replacementName),
+
     //Editing
     postAddSlot: (event_channel, slot, squadNumber) => Request.POST(`${eventChannelUrl}/${event_channel}/addSlot/${squadNumber}`, slot),
 

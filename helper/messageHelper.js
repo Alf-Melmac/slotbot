@@ -59,13 +59,15 @@ class MessageHelper {
 
     static sendDmToRecipient(message, recipientId, dataToSend, callback) {
         const recipient = client.users.cache.get(recipientId);
-        return recipient.send(dataToSend, {split: true})
-            .then(message => callback(message))
-            .catch(error => {
-                logger.error(`Could not send DM to ${recipient.tag}.\n`, error);
-                this.replyAndDeleteOnlySend(message, `Leider kann ich ${recipient.tag} keine DM senden. Hau den doch mal für mich.`);
-                callback();
-            });
+        if (recipient) {
+            return recipient.send(dataToSend, {split: true})
+                .then(message => callback(message))
+                .catch(error => {
+                    logger.error(`Could not send DM to ${recipient.tag}.\n`, error);
+                    this.replyAndDeleteOnlySend(message, `Leider kann ich ${recipient.tag} keine DM senden. Hau den doch mal für mich.`);
+                    callback();
+                });
+        }
     }
 
     static sendDmToRecipientAndDeleteMessage(message, recipientId, dataToSend, callback) {
