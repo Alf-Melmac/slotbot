@@ -3,16 +3,22 @@ const Squad = require('../modules/squad');
 
 class EventPrint {
     static createEventEmbed(event) {
-        // noinspection JSCheckFunctionSignatures
+        const LOGO_URL = 'https://cdn.discordapp.com/attachments/759147249325572097/759147455483740191/AM-Blau-big-bananemitschokokuchen.jpg';
+
+        let thumbnail = event.pictureUrl;
+        if (!thumbnail || thumbnail.trim() === '') {
+            thumbnail = LOGO_URL;
+        }
+
         return new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle(event.name)
             //.setURL('Event url')
-            .setDescription(event.description)
-            .setThumbnail('https://cdn.discordapp.com/attachments/739819127740301363/739843573620539402/Mission.png')
+            .setDescription(event.description !== null ? event.description : '')
+            .setThumbnail(thumbnail)
             // .setImage('https://cdn.discordapp.com/attachments/739819127740301363/739843573620539402/Mission.png')
             .addFields(buildFields(event))
-            .setFooter('AmB wünscht viel Spaß!', 'https://cdn.discordapp.com/attachments/759147249325572097/759147455483740191/AM-Blau-big-bananemitschokokuchen.jpg')
+            .setFooter('AmB wünscht viel Spaß!', LOGO_URL)
             .setTimestamp();
     }
 
@@ -29,11 +35,13 @@ class EventPrint {
 function buildFields(event) {
     let fields = [];
 
-    buildField(fields, 'Zeitplan', `${formatDate(event.date, event.startTime)} und dauert ${event.missionLength}`);
+    let dateTimeText = `${formatDate(event.date, event.startTime)}`;
+    buildField(fields, 'Zeitplan', event.missionLength !== null ? `${dateTimeText} und dauert ${event.missionLength}` : dateTimeText);
     buildField(fields, 'Missionstyp', event.missionType, true);
     buildField(fields, 'Karte', event.map, true);
     buildField(fields, 'Modpack', event.modPack, true);
-    buildField(fields, 'Kann die Reserve mitspielen?', event.reserveParticipating ? 'Ja' : 'Nein');
+    const reserveParticipating = event.reserveParticipating;
+    buildField(fields, 'Kann die Reserve mitspielen?', reserveParticipating !== null ? reserveParticipating ? 'Ja' : 'Nein' : null);
     buildField(fields, 'Missionszeit', event.missionTime, true);
     buildField(fields, 'Navigation', event.navigation, true);
     buildField(fields, 'Medicsystem', event.medicalSystem, true);

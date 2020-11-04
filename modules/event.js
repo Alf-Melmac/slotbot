@@ -4,8 +4,8 @@ const eventRequest = require("./rest/eventRequest");
 const eventChannelRequest = require("./rest/eventChannelRequest");
 
 class Event {
-    constructor(name, date, startTime, channel, squadList, infoMsg, slotListMsg, description, missionType, missionLength,
-                reserveParticipating, modPack, map, missionTime, navigation, technicalTeleport, medicalSystem) {
+    constructor(name, date, startTime, channel, squadList, infoMsg, slotListMsg, description, pictureUrl, missionType,
+                missionLength, reserveParticipating, modPack, map, missionTime, navigation, technicalTeleport, medicalSystem) {
         this.name = name;
         this.date = date;
         this.startTime = startTime;
@@ -14,6 +14,7 @@ class Event {
         this.infoMsg = infoMsg;
         this.slotListMsg = slotListMsg;
         this.description = description;
+        this.pictureUrl = pictureUrl;
 
         this.missionType = missionType;
         this.missionLength = missionLength;
