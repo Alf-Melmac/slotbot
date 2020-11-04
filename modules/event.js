@@ -36,13 +36,10 @@ class Event {
             });
     }
 
-    static putMessageIds(message, eventId, channelIds, callback) {
-        eventRequest.putChannelIdsRequest(eventId, channelIds)
+    static updateEvent(message, eventId, event, callback) {
+        eventRequest.putEventUpdateRequest(eventId, event)
             .then(response => responseHandling(message, response, callback))
-            .catch(reason => {
-                logger.error(reason);
-                MessageHelper.replyAndDelete(message, 'Jetzt bin ich selber durcheinander gekommen wer hier warum wann Nachrichten sendet.');
-            });
+            .catch(reason => requestErrorHandling(reason, message));
     }
 
     static delEvent(message, callback) {

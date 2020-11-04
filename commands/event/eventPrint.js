@@ -34,7 +34,7 @@ module.exports = {
                                 slotListMsg.pin().then(pinMsg => MessageHelper.deleteMessages(pinMsg.channel.lastMessage));
 
                                 //Send msgIds to database
-                                Event.putMessageIds(
+                                Event.updateEvent(
                                     message,
                                     event.id,
                                     {infoMsg: infoMsg.id, slotListMsg: slotListMsg.id},

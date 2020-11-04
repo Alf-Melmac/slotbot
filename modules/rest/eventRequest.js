@@ -3,7 +3,7 @@ const eventUrl = `${slotbotServerUrl}/events`;
 const Request = require('../../helper/request');
 
 module.exports = {
-    putChannelIdsRequest: (event_id, channel_ids) => Request.PUT(`${eventUrl}/${event_id}`, channel_ids),
+    putEventUpdateRequest: (event_id, event) => Request.PUT(`${eventUrl}/${event_id}`, event),
 
     postEventRequest: (event) => Request.POST(`${eventUrl}`, event)
 }
