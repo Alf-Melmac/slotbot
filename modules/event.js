@@ -134,7 +134,7 @@ function responseHandling(message, response, callback) {
         } else {
             let reply = responseJson.errorMessage;
             if (response.status === 404) {
-                reply = `Das angefragte konnte nicht gefunden werden. \n > ${reply}`;
+                reply = `Das Angefragte konnte nicht gefunden werden. \n > ${reply}`;
             } else if (response.status === 403) {
                 reply = `Du bist nicht berechtigt das auszuführen. \n > ${reply}`;
             }
