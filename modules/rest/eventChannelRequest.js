@@ -1,5 +1,5 @@
 const {slotbotServerUrl} = require('../../config.json');
-const eventChannelUrl = `${slotbotServerUrl}/events/channel`;
+const eventChannelUrl = `${slotbotServerUrl}/slotbot/api/events/channel`;
 const Request = require('../../helper/request');
 
 module.exports = {

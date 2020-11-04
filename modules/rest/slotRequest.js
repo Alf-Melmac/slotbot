@@ -1,5 +1,5 @@
 const {slotbotServerUrl} = require('../../config.json');
-const slotUrl = `${slotbotServerUrl}/slots`;
+const slotUrl = `${slotbotServerUrl}/slotbot/api/slots`;
 const Request = require('../../helper/request');
 
 module.exports = {

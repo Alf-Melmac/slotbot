@@ -1,7 +1,7 @@
 {
   "prefix": "!",
   "token": "DISCORD TOKEN HERE",
-  "slotbotServerUrl": "SLOTBOT SERVER URL HERE/slotbot/api",
+  "slotbotServerUrl": "SLOTBOT SERVER URL HERE",
   "slotbotAuthTokenName": "slotbot-auth-token",
   "slotbotAuthToken": "SLOTBOT SERVER TOKEN HERE"
 }

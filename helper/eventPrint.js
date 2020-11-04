@@ -13,7 +13,7 @@ class EventPrint {
         return new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle(event.name)
-            //.setURL('Event url')
+            .setURL(event.url)
             .setDescription(event.description !== null ? event.description : '')
             .setThumbnail(thumbnail)
             // .setImage('https://cdn.discordapp.com/attachments/739819127740301363/739843573620539402/Mission.png')
