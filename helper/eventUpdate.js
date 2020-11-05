@@ -34,7 +34,7 @@ class EventUpdate {
             .catch(logger.error);
 
         message.channel.messages.fetch(event.slotListMsg)
-            .then(infoMsg => infoMsg.edit(EventPrint.createSlotListMessage(event)))
+            .then(slotListMsg => slotListMsg.edit(EventPrint.createSlotListMessage(event)))
             .catch(logger.error);
     }
 
