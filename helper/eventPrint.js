@@ -37,7 +37,7 @@ function buildFields(event) {
 
     let dateTimeText = `${formatDate(event.date, event.startTime)}`;
     buildField(fields, 'Zeitplan', event.missionLength !== null ? `${dateTimeText} und dauert ${event.missionLength}` : dateTimeText);
-    buildField(fields, 'Missionstyp', event.missionType, true);
+    buildField(fields, 'Missionstyp', event.missionTypeAndRespawn, true);
     buildField(fields, 'Karte', event.map, true);
     buildField(fields, 'Modpack', event.modPack, true);
     const reserveParticipating = event.reserveParticipating;
