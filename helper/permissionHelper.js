@@ -1,7 +1,7 @@
 const roleAdministrator = 'Administrator';
 const roleModerator = 'Moderator';
 const roleCreator = 'Creator';
-const roleGamer = 'Gamer';
+const roleArma = 'ArmA';
 
 class PermissionHelper {
     static authorHasRole(message, roleNeeded) {
@@ -36,7 +36,7 @@ class PermissionHelper {
     }
 
     static getSlotRoles() {
-        return [roleGamer];
+        return [roleArma];
     }
 
 }

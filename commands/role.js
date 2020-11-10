@@ -20,9 +20,9 @@ module.exports = {
                 let roleCr = message.guild.roles.cache.find(role => role.name === 'Creator');
                 PermissionHelper.authorHasRole(message, 'Creator') ? roles.remove(roleCr) : roles.add(roleCr);
                 break;
-            case 'gamer':
-                let roleGa = message.guild.roles.cache.find(role => role.name === 'Gamer');
-                PermissionHelper.authorHasRole(message, 'Gamer') ? roles.remove(roleGa) : roles.add(roleGa);
+            case 'arma':
+                let roleAr = message.guild.roles.cache.find(role => role.name === 'ArmA');
+                PermissionHelper.authorHasRole(message, 'ArmA') ? roles.remove(roleAr) : roles.add(roleAr);
                 break;
         }
 
