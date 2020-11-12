@@ -34,7 +34,7 @@ class Event {
             .then(response => responseHandling(message, response, callback))
             .catch(reason => {
                 logger.error(reason);
-                MessageHelper.replyAndDelete(message, 'Des Event konnte ich nicht an den Server senden. Such dir einen Grund aus, warum nicht. Machs später nochmal.');
+                MessageHelper.replyAndDelete(message, 'Des Event konnte nicht an den Server gesendet werden. Probiere es später erneut oder nutze den Wizard auf der Website.');
             });
     }
 

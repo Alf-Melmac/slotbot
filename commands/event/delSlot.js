@@ -3,7 +3,7 @@ const EventUpdate = require('../../helper/eventUpdate');
 
 module.exports = {
     name: 'delslot',
-    description: 'Entfernt einen Slot aus einem Event.',
+    description: 'Entfernt einen leeren Slot aus einem Event.',
     argCount: [1],
     aliases: ['eventdelslot', 'deleteslot'],
     usage: '<Slotnummer>',

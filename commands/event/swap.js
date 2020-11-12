@@ -7,7 +7,7 @@ let pendingSwapRequests = new Map();
 
 module.exports = {
     name: 'swap',
-    description: 'Sendet eine Anfrage, um einen Slot mit einer Person zu tauschen',
+    description: 'Sendet eine Anfrage, um einen Slot mit einer Person zu tauschen.',
     argCount: [1],
     usage: '<Slotnummer>',
     authorizedRoles: PermissionHelper.getSlotRoles(),

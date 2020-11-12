@@ -6,7 +6,7 @@ module.exports = {
     description: 'Fügt einem Event einen Slot hinzu. Squads sind durchnummeriert, beginnend mit 0.',
     argCount: [3],
     aliases: ['eventaddslot'],
-    usage: '<Squad> <Slotnummer> <Slotname>',
+    usage: '<Squad Position> <Slotnummer> <Slotname>',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
     dmAllowed: false,
     execute(message, args) {

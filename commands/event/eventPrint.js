@@ -7,7 +7,6 @@ module.exports = {
     description: 'Gibt das Event des aktuellen Channels aus.',
     argCount: [0],
     aliases: ['showevent'],
-    usage: ' ',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
     dmAllowed: false,
     execute(message, args) {

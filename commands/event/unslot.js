@@ -4,10 +4,10 @@ const Validator = require('../../helper/validator');
 
 module.exports = {
     name: 'unslot',
-    description: 'Slottet dich selbst oder jemand anderen aus',
+    description: 'Slottet dich selbst oder jemand anderen aus.',
     argCount: [0, 1],
     aliases: ['forceunslot'],
-    usage: '<@AuzuslottendePerson>',
+    usage: '(<@AuzuslottendePerson>)',
     authorizedRoles: PermissionHelper.getSlotRoles(),
     dmAllowed: false,
     execute(message, args) {

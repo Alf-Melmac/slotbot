@@ -5,7 +5,7 @@ module.exports = {
     description: 'Ordnet einem Event den aktuellen Kanal zu.',
     argCount: [1],
     aliases: ['addchannel', 'addevent'],
-    usage: '<EventId>',
+    usage: '<Event-ID>',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
     dmAllowed: false,
     execute(message, args) {

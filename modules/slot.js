@@ -1,3 +1,4 @@
+const User = require('../modules/user');
 const slotRequest = require("./rest/slotRequest");
 
 class Slot {
@@ -25,7 +26,7 @@ class Slot {
         }
         str += ': ';
 
-        const isBlocked = this.user && this.user.id === "11111";
+        const isBlocked = this.user && this.user.id === User.defaultUserId;
         if (this.user && this.user.id && !isBlocked) {
             str += `**<@${this.user.id}>**`;
         } else if (isBlocked) {

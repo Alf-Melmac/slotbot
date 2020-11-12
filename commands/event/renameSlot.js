@@ -3,7 +3,7 @@ const EventUpdate = require('../../helper/eventUpdate');
 
 module.exports = {
     name: 'renameslot',
-    description: 'Ermöglicht es einen Slot umzubenennen',
+    description: 'Ermöglicht es einen Slot umzubenennen.',
     argCount: [2],
     aliases: ['editslot', 'eventrenameslot'],
     usage: '<Slotnummer> "<Slotname>"',

@@ -6,7 +6,7 @@ module.exports = {
     description: 'Sperrt einen Slot und setzt, falls angegeben, den Text an dessen Stelle.',
     argCount: [1, 2],
     aliases: ['slotblock'],
-    usage: '<Slotnummer> "<Ersatzname>"',
+    usage: '<Slotnummer> ("<Ersatzname>")',
     authorizedRoles: PermissionHelper.getEventManageRoles(),
     dmAllowed: false,
     execute(message, args) {

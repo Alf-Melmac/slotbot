@@ -24,7 +24,7 @@ class EventUpdate {
 
     static updateIfNotCached(message, event) {
         if (!this.addEventToCache(event)) {
-            // return;
+            return;
         }
 
         logger.debug('Update');
@@ -39,11 +39,11 @@ class EventUpdate {
     }
 
     static addEventToCache(event) {
-        if (_.isEqualWith(eventCache.get(event.channel), event)) {
+        if (_.isEqual(eventCache.get(event.id), event)) {
             //No update required
             return false;
         }
-        eventCache.set(event.channel, event);
+        eventCache.set(event.id, event);
         return true;
     }
 }

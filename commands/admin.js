@@ -2,7 +2,7 @@ const statusRequest = require("../modules/rest/statusRequest");
 
 module.exports = {
     name: 'admin',
-    description: 'Admin utility!',
+    description: 'Admin Funktionalitäten!',
     argCount: [1],
     authorizedRoles: PermissionHelper.getAdministrativeRoles(),
     dmAllowed: true,
@@ -11,8 +11,6 @@ module.exports = {
 
         switch (args[0]) {
             case 'pinga':
-                logger.debug(`Channel ID: ${message.channel.id}`);
-                logger.debug(`Channel name: ${message.channel.name}`);
                 MessageHelper.replyAndDeleteOnlySend(message, 'Pong.');
                 break;
             case 'pingb':
@@ -28,24 +26,17 @@ module.exports = {
                     MessageHelper.replyAndDeleteOnlySend(message, error.message);
                 });
                 break;
-            case 'stop':
-                if (message.author.id === '185067296623034368') {
-                    logger.info('Stop command received');
-                    MessageHelper.deleteMessages(message);
-                    process.exit();
-                }
-                break;
             case 'channelTest':
                 let channel = message.channel;
                 logger.info(channel);
-                logger.info(channel.id);
-                logger.info(channel.name);
+                logger.info(`Channel ID: ${message.channel.id}`);
+                logger.info(`Channel name: ${message.channel.name}`);
                 break;
             case 'userTest':
                 let author = message.author;
                 logger.info(author.id);
                 break;
-            case 'del':
+            case 'clearChannel':
                 if (message.author.id === '185067296623034368') {
                     (async () => {
                         let fetched;
@@ -55,6 +46,13 @@ module.exports = {
                         }
                         while (fetched.size >= 2);
                     })()
+                }
+                break;
+            case 'stop':
+                if (message.author.id === '185067296623034368') {
+                    logger.info('Stop command received');
+                    MessageHelper.deleteMessages(message);
+                    process.exit();
                 }
                 break;
         }

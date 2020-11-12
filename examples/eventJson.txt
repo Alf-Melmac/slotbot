@@ -33,6 +33,7 @@
   "description": "Eine Eventbeschreibung",
   "pictureUrl": "https://cdn.discordapp.com/attachments/759147249325572097/759147455483740191/AM-Blau-big-bananemitschokokuchen.jpg",
   "missionType": "COOP",
+  "respawn": true,
   "missionLength": "3 Stunden",
   "reserveParticipating": true,
   "modPack": "2008_ArmaMachtBock",

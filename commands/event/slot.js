@@ -4,10 +4,10 @@ const Validator = require("../../helper/validator");
 
 module.exports = {
     name: 'slot',
-    description: 'Slottet dich selbst oder jemand anderen',
+    description: 'Slottet dich selbst oder jemand anderen.',
     argCount: [1, 2],
     aliases: ['forceslot'],
-    usage: '<Slotnummer> <@ZuSlottendePerson>',
+    usage: '<Slotnummer> (<@ZuSlottendePerson>)',
     authorizedRoles: PermissionHelper.getSlotRoles(),
     dmAllowed: false,
     execute(message, args) {
@@ -33,7 +33,7 @@ module.exports = {
                 }
 
                 Event.slotForEvent(message, args[0], recipientId, (slotNumber, event) => {
-                    MessageHelper.sendDmToRecipient(message, recipientId, `Der Kacknoob ${message.author} hat dich für das Event ${event.name} am ${event.date} auf den Slot ${slotNumber} eingetragen. Dies ist eine Diktatur.`, () => {});
+                    MessageHelper.sendDmToRecipient(message, recipientId, `${message.author} hat dich für das Event ${event.name} am ${event.date} auf den Slot ${slotNumber} eingetragen.`, () => {});
                     EventUpdate.updateWithGivenEvent(message, event);
                 });
             } else {

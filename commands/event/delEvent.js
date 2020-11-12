@@ -2,10 +2,9 @@ const Event = require('../../modules/event');
 
 module.exports = {
     name: 'delevent',
-    description: 'Entfernt einen Slot aus einem Event.',
+    description: 'Löscht das Event des Kanals und entfernt alle Botnachrichten.',
     argCount: [0],
     aliases: ['eventdel', 'deleteevent', 'removeevent'],
-    usage: ' ',
     authorizedRoles: PermissionHelper.getAdministrativeRoles(),
     dmAllowed: false,
     execute(message, args) {

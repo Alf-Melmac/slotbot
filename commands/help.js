@@ -1,11 +1,12 @@
 const {prefix} = require('../config.json');
+const _ = require('lodash');
 
 module.exports = {
     name: 'help',
-    description: 'Liste aller Befehle oder Information über einen Befehl.',
+    description: 'Gibt alle Befehle oder Informationen über einen Befehl aus.',
     argCount: [0, 1],
     aliases: ['commands'],
-    usage: '<!--suppress HtmlDeprecatedTag --><command name>',
+    usage: '(<Befehlsname>)',
     authorizedRoles: ['@everyone'],
     dmAllowed: true,
     execute(message, args) {
@@ -25,7 +26,7 @@ module.exports = {
                     .map(command => command.name)
                     .join(', ')
             );
-            data.push(`\nSchicke einfach "${prefix}${this.name} [command name]" um Infos über einen bestimmten Befehl zu bekommen!`);
+            data.push(`\nSchicke einfach "${prefix}${this.name} ${this.usage.replaceAll(/[()]/, '')}" um Infos über einen bestimmten Befehl zu bekommen!`);
 
             return MessageHelper.sendDmAndDeleteMessage(message, data);
         }
@@ -34,14 +35,19 @@ module.exports = {
         const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
         if (!command) {
-            return MessageHelper.replyAndDelete(message, 'Den Befehl kenne ich nicht');
+            return MessageHelper.replyAndDelete(message, 'Den Befehl kenne ich nicht.');
         }
 
         data.push(`**Name:** ${command.name}`);
 
-        if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(', ')}`);
-        if (command.description) data.push(`**Description:** ${command.description}`);
-        if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+        if (command.aliases) data.push(`**Aliase:** ${command.aliases.join(', ')}`);
+        if (command.description) data.push(`**Beschreibung:** ${command.description}`);
+        let usage = `**Benutzung:** ${prefix}${command.name}`;
+        if (_.isEqual(command.argCount, [0])) {
+            data.push(usage);
+        } else if (command.usage) {
+            data.push(`${usage} ${command.usage}`);
+        }
 
         MessageHelper.sendDmAndDeleteMessage(message, data);
     }
