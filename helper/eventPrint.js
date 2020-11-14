@@ -18,7 +18,7 @@ class EventPrint {
             .setThumbnail(thumbnail)
             // .setImage('https://cdn.discordapp.com/attachments/739819127740301363/739843573620539402/Mission.png')
             .addFields(buildFields(event))
-            .setFooter('AmB wünscht viel Spaß!', LOGO_URL)
+            .setFooter(`Mission von ${event.creator}`)
             .setTimestamp();
     }
 
