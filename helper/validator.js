@@ -8,8 +8,8 @@ class Validator {
     }
 
     static isUserMention(s) {
-        //For 18 digits we can assume that it is a Discord User ID
-        return /^<@!\d{18}>$/.test(s);
+        //For 17 or 18 digits we can assume that it is a Discord User ID
+        return /^<@!\d{17,18}>$/.test(s);
     }
 
     static onlyNumbers(s) {
