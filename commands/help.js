@@ -26,7 +26,7 @@ module.exports = {
                     .map(command => command.name)
                     .join(', ')
             );
-            data.push(`\nSchicke einfach "${prefix}${this.name} ${this.usage.replaceAll(/[()]/, '')}" um Infos über einen bestimmten Befehl zu bekommen!`);
+            data.push(`\nSchicke einfach "${prefix}${this.name} ${this.usage.replace(/[()]/g, '')}" um Infos über einen bestimmten Befehl zu bekommen!`);
 
             return MessageHelper.sendDmAndDeleteMessage(message, data);
         }
