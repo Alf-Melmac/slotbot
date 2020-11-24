@@ -7,3 +7,7 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+
+#Sonarlint
+sonarlint-state.xml
+sonarlint/
