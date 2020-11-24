@@ -39,7 +39,7 @@ function buildFields(event) {
     buildField(fields, 'Zeitplan', event.missionLength !== null ? `${dateTimeText} und dauert ${event.missionLength}` : dateTimeText);
     buildField(fields, 'Missionstyp', event.missionTypeAndRespawn, true);
     buildField(fields, 'Karte', event.map, true);
-    buildField(fields, 'Modpack', event.modPack, true);
+    buildField(fields, 'Modpack', event.modPackUrl !== null ? `[${event.modPack}](${event.modPackUrl})` : event.modPack, true);
     const reserveParticipating = event.reserveParticipating;
     buildField(fields, 'Kann die Reserve mitspielen?', reserveParticipating !== null ? reserveParticipating ? 'Ja' : 'Nein' : null);
     buildField(fields, 'Missionszeit', event.missionTime, true);
