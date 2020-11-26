@@ -25,13 +25,13 @@ module.exports = {
                 EventUpdate.updateWithGivenEvent(message, event);
             });
         } else /*if (args.length === 2)*/ {
-            let recipientId = args[1].replace(/\D/g, '');
             if (PermissionHelper.hasEventManageRole(message)) {
                 if (!Validator.isUserMention(args[1])) {
-                    MessageHelper.replyAndDelete(message, 'Bitte übergebe an zweiter Stelle eine Person.');
+                    MessageHelper.replyAndDelete(message, 'Bitte übergebe nach der Slotnummer eine Person.');
                     return;
                 }
 
+                const recipientId = args[1].replace(/\D/g, '');
                 Event.slotForEvent(message, args[0], recipientId, (slotNumber, event) => {
                     MessageHelper.sendDmToRecipient(message, recipientId, `${message.author} hat dich für das Event ${event.name} am ${event.date} auf den Slot ${slotNumber} eingetragen.`, () => {});
                     EventUpdate.updateWithGivenEvent(message, event);
