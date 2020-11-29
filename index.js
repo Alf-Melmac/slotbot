@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //Discord setup
 const Discord = require('discord.js');
 client = new Discord.Client();
