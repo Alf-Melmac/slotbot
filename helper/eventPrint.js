@@ -10,16 +10,20 @@ class EventPrint {
             thumbnail = LOGO_URL;
         }
 
-        return new Discord.MessageEmbed()
+        const embed = new Discord.MessageEmbed()
             .setColor(getRandomColor())
             .setTitle(event.name)
             .setURL(event.url)
             .setDescription(event.description !== null ? event.description : '')
             .setThumbnail(thumbnail)
-            // .setImage('https://cdn.discordapp.com/attachments/739819127740301363/739843573620539402/Mission.png')
             .addFields(buildFields(event))
             .setFooter(`Mission von ${event.creator}`)
             .setTimestamp();
+        if (event.hidden) {
+            embed.setImage('https://cdn.discordapp.com/attachments/759147249325572097/789151354920632330/hidden_event.jpg')
+        }
+
+        return embed;
     }
 
     static createSlotListMessage(event) {

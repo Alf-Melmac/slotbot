@@ -4,14 +4,15 @@ const eventRequest = require("./rest/eventRequest");
 const eventChannelRequest = require("./rest/eventChannelRequest");
 
 class Event {
-    constructor(url, name, date, startTime, creator, channel, squadList, infoMsg, slotListMsg, description, pictureUrl,
-                missionTypeAndRespawn, missionLength, reserveParticipating, modPack, modPackUrl, map, missionTime,
-                navigation, technicalTeleport, medicalSystem) {
+    constructor(url, name, date, startTime, creator, hidden, channel, squadList, infoMsg, slotListMsg, description,
+                pictureUrl, missionTypeAndRespawn, missionLength, reserveParticipating, modPack, modPackUrl, map,
+                missionTime, navigation, technicalTeleport, medicalSystem) {
         this.url = url;
         this.name = name;
         this.date = date;
         this.startTime = startTime;
         this.creator = creator;
+        this.hidden = hidden;
         this.channel = channel;
         this.squadList = squadList;
         this.infoMsg = infoMsg;
