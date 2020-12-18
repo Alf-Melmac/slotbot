@@ -100,6 +100,12 @@ class Event {
             .catch(reason => requestErrorHandling(reason, message));
     }
 
+    static findSwapSlotsByUser(message, userId, callback) {
+        eventChannelRequest.getSwapSlotsByUser(message.channel.id, new User(message.author.id), new User(userId))
+            .then(response => responseHandling(message, response, callback))
+            .catch(reason => requestErrorHandling(reason, message));
+    }
+
     static findSwapSlots(message, slotNumber, callback) {
         eventChannelRequest.getSwapSlots(message.channel.id, slotNumber, new User(message.author.id))
             .then(response => responseHandling(message, response, callback))
