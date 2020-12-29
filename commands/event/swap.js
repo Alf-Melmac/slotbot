@@ -1,4 +1,5 @@
 const {prefix} = require('../../config.json');
+const Bot = require("../../bot");
 const Event = require('../../modules/event');
 const Slot = require('../../modules/slot');
 const EventUpdate = require('../../helper/eventUpdate');
@@ -91,8 +92,7 @@ function swap(message, slots) {
                             if (reaction.emoji.name === '👍') {
                                 performSwap(message, slots, ownSlot, ownSlotUser, foreignSlot, foreignSlotUser);
                             } else {
-                                MessageHelper.sendDm(message, `${client.users.cache.get(foreignSlotUser)} hat deine Anfrage zum Slot tauschen abgelehnt.`, () => MessageHelper.sendDmToRecipient(message, foreignSlotUser, 'Du hast das Tauschangebot abgelehnt.', () => {
-                                }));
+                                MessageHelper.sendDm(message, `${Bot.client.users.cache.get(foreignSlotUser)} hat deine Anfrage zum Slot tauschen abgelehnt.`, () => MessageHelper.sendDmToRecipient(message, foreignSlotUser, 'Du hast das Tauschangebot abgelehnt.', () => {}));
                             }
                             pendingSwapRequests.delete(ownSlotUser);
                             MessageHelper.deleteDm(dmMsg);

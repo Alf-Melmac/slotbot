@@ -1,4 +1,5 @@
 const Event = require('../../modules/event');
+const Bot = require('../../bot');
 
 module.exports = {
     name: 'delevent',
@@ -13,7 +14,7 @@ module.exports = {
         Event.delEvent(message, () => {
             message.channel.messages.fetch({limit: 100}).then(messages => {
                 //Remove all Bot messages (should only be Event infos and slot Message)
-                const botMessages = messages.filter(oneMessage => oneMessage.author === client.user);
+                const botMessages = messages.filter(oneMessage => oneMessage.author === Bot.client.user);
                 message.channel.bulkDelete(botMessages);
                 MessageHelper.deleteMessages(message);
             });

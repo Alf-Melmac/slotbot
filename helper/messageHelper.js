@@ -1,3 +1,4 @@
+const Bot = require("../bot");
 const standardDeletionTime = 2500;
 
 class MessageHelper {
@@ -58,7 +59,7 @@ class MessageHelper {
     }
 
     static sendDmToRecipient(message, recipientId, dataToSend, callback) {
-        const recipient = client.users.cache.get(recipientId);
+        const recipient = Bot.client.users.cache.get(recipientId);
         if (recipient) {
             return recipient.send(dataToSend, {split: true})
                 .then(message => callback(message))

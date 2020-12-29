@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Discord bot to schedule events",
   "repository": "github:Alf-Melmac/slotbot",
-  "main": "index.js",
+  "main": "app.js",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,7 @@
     "lodash": "~4.17.20",
     "node-fetch": "~2.6.1",
     "winston": "~3.3.3",
-    "winston-daily-rotate-file": "~4.5.0"
+    "winston-daily-rotate-file": "~4.5.0",
+    "express": "~4.17.1"
   }
 }

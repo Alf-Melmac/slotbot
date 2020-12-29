@@ -3,5 +3,6 @@
   "token": "DISCORD TOKEN HERE",
   "slotbotServerUrl": "SLOTBOT SERVER URL HERE",
   "slotbotAuthTokenName": "slotbot-auth-token",
-  "slotbotAuthToken": "SLOTBOT SERVER TOKEN HERE"
+  "slotbotAuthToken": "SLOTBOT SERVER TOKEN HERE",
+  "port": 8091
 }
