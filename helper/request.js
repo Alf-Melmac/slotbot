@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
-const {slotbotAuthTokenName, slotbotAuthToken} = require('../config.json');
+const slotbotAuthTokenName = require('../config.json').slotbotAuthTokenName || 'slotbot-auth-token';
+const {slotbotAuthToken} = require('../config.json');
 
 class Request {
     static async GET(url) {

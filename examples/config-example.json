@@ -1,8 +1,10 @@
 {
   "prefix": "!",
-  "token": "DISCORD TOKEN HERE",
-  "slotbotServerUrl": "SLOTBOT SERVER URL HERE",
-  "slotbotAuthTokenName": "slotbot-auth-token",
-  "slotbotAuthToken": "SLOTBOT SERVER TOKEN HERE",
-  "port": 8091
+  "token": "TOKEN OF THE DISCORD BOT. Found under https://discord.com/developers/applications",
+  "slotbotServerUrl": "SLOTBOT SERVER URL: EXAMPLE: http://localhost:80",
+  "slotbotAuthTokenName": "SLOTBOT SERVER TOKEN NAME. DEFAULT: slotbot-auth-token",
+  "slotbotAuthToken": "SLOTBOT SERVER TOKEN",
+  "port": 8091,
+  "apiTokenName": "SLOTBOT API TOKEN NAME. NEEDED FOR SLOTBOT SERVER CONFIGURATION. DEFAULT: slotbot-authorization",
+  "apiToken": "SLOTBOT API TOKEN: NEEDED FOR SLOTBOT SERVER CONFIGURATION"
 }

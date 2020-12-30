@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
-    logger.debug('ping');
+    logger.debug('API: ping');
 
     res.type('text/plain');
     res.status(200).send('Pong');
