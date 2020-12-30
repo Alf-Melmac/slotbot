@@ -6,7 +6,7 @@ module.exports = {
     name: 'eventprint',
     description: 'Gibt das Event des aktuellen Channels aus.',
     argCount: [0],
-    aliases: ['showevent'],
+    aliases: ['showevent', 'printevent'],
     authorizedRoles: PermissionHelper.getEventManageRoles(),
     dmAllowed: false,
     execute(message, args) {
